@@ -1,0 +1,6 @@
+.main-section {
+    flex-grow: 1; /* Tells to fill middle gap */
+    height: 100vh;
+    overflow-y: auto; /* Allows middle to scroll */
+    background-color: var(--bg-color);
+}

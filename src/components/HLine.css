@@ -1,0 +1,10 @@
+.hline {
+    width: calc(100% + (var(--offset) * 2));
+    margin-left: calc(var(--offset) * -1);
+    margin-top: var(--margin-y);
+    margin-bottom: var(--margin-y);
+    height: 1px;
+    background-color: var(--text-main);
+    border: none;
+    transition: background-color 0.3s ease;
+}
