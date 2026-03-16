@@ -3,12 +3,35 @@
   --bg-color: #FFF4E4;
   --accent: #6E79B7;
   --text-main: #1C1C1C;
-  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
-  --font-jetbrains: 'JetBrains Mono', sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-jetbrains: 'JetBrains Mono Variable', monospace;
   --standard-radius: 12px;
   --border-thin: 1px solid #1C1C1C;
   --border-thick: 2px solid #1C1C1C;
+  /* Base size: Usually 16px */
+  --text-base: 1rem; 
 }
+
+/* Sizing Utilities */
+.text-xs   { font-size: 0.75rem;   line-height: 1rem; }    /* 12px */
+.text-sm   { font-size: 0.875rem;  line-height: 1.25rem; } /* 14px */
+.text-base { font-size: 1rem;      line-height: 1.5rem; }  /* 16px */
+.text-lg   { font-size: 1.125rem;  line-height: 1.75rem; } /* 18px */
+.text-xl   { font-size: 1.25rem;   line-height: 1.75rem; } /* 20px */
+.text-2xl  { font-size: 1.5rem;    line-height: 2rem; }    /* 24px */
+.text-3xl  { font-size: 1.875rem;  line-height: 2.25rem; } /* 30px */
+.text-4xl  { font-size: 2.25rem;   line-height: 2.5rem; }  /* 36px */
+.text-5xl  { font-size: 3rem;      line-height: 1; }       /* 48px */
+
+/* Weight Utilities (The perfect companions) */
+.font-light  { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-bold   { font-weight: 700; }
+
+body {
+    font-size: var(--text-base);
+  }
 
 .hline { 
   width: 100%;
@@ -28,20 +51,15 @@
   flex-direction: column;
   gap: 1rem;
 }
-/* Typography Groups */
-.heading-main {
-  font-family: var(--font-jakarta);
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #333;
-}
 
 .main-font {
   font-family: var(--font-jakarta);
+  color: var(--text-main);
 }
 
 .secondary-font {
   font-family: var(--font-jetbrains);
+  color: var(--text-main);
 }
 
 /* Decoration Groups */
@@ -50,6 +68,15 @@
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --text-base: 0.875rem; /* Everything on mobile shrinks by 12.5% automatically */
+  }
+  body {
+    font-size: var(--text-base);
+  }
 }
 
 

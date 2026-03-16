@@ -1,10 +1,11 @@
 import './MidSec.css'
+import MyName from './MyName';
 
 export default function MidSec() {
     return (
         <>
             <main className="main-section">
-                <h1>Leah</h1>
+                <MyName className="svg-name" />
             </main>
         </>
     )

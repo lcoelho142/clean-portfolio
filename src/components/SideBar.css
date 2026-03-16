@@ -10,5 +10,5 @@
     z-index: 100;
     gap: 10px;
     align-items: center;
-    border-left: 1px solid #1C1C1C;
+    border-left: var(--border-thin);
 }

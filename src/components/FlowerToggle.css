@@ -1,0 +1,97 @@
+/* FlowerToggle.css */
+
+/* ── Button reset ── */
+.flower-btn {
+  width: 42px;
+  height: 42px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  /* position: relative lets the label sit on top of the svg */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* ── Hover label ── */
+/* Sits centered over the flower, invisible by default.
+   On hover it scales up to full size as the flower shrinks away. */
+.hover-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.1);
+  font-family: var(--font-jetbrains);
+  text-transform: uppercase;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Label color matches the current mode so it's always readable */
+.flower-btn.day .hover-label {
+  color: var(--accent);
+}
+
+.flower-btn.night .hover-label {
+  color: var(--accent);
+}
+
+/* ── SVG ── */
+.flower-svg {
+  width: 42px;
+  height: 42px;
+  overflow: visible;
+}
+
+.flower-svg-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ── Scale swap on hover ── */
+/* SVG shrinks and fades out */
+.flower-btn:hover .flower-svg-wrap {
+  opacity: 0;
+  transform: scale(0.7)
+}
+
+/* Label grows in — overrides the default scale(1.1) resting state */
+.flower-btn:hover .hover-label {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ── Day colors ── */
+.flower-btn.day .petal-indigo {
+  fill: var(--accent);
+}
+
+.flower-btn.day .petal-dark {
+  fill: var(--text-main);
+}
+
+/* ── Night colors (inverted) ── */
+.flower-btn.night .petal-indigo {
+  fill: var(--accent);
+}
+
+.flower-btn.night .petal-dark {
+  fill: var(--text-main);
+}
+
+/* ── Color transition ── */
+.flower-btn .petal-indigo,
+.flower-btn .petal-dark {
+  transition: fill 0.55s ease;
+}
+
