@@ -1,8 +1,32 @@
 .main-section {
+    position: relative;
     flex-grow: 1; /* Tells to fill middle gap */
     height: 100vh;
     overflow-y: auto; /* Allows middle to scroll */
     background-color: var(--bg-color);
 }
 
+.leah-bloom {
+    position: absolute;
+    width: 100%;
+    max-width: 700px;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+}
 
+.top-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    padding: var(--base-padding);
+}
+
+.top-group * {
+    z-index: 10;
+}
+
+.top-group p {
+    max-width: 200px;
+    text-align: right;
+}
