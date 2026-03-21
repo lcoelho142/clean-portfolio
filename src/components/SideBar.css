@@ -12,3 +12,10 @@
     align-items: center;
     border-left: var(--border-thin);
 }
+
+.email {
+    overflow-wrap: break-word;
+    display: block;
+    width: 100%;
+    text-align: center;
+}

@@ -9,7 +9,7 @@
 .leah-bloom {
     position: absolute;
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
     right: 0;
     bottom: 0;
     z-index: 9;
@@ -22,11 +22,24 @@
     padding: var(--base-padding);
 }
 
+.bottom-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--base-padding);
+    gap: 1rem;
+    max-width: 525px;
+}
+
+.bottom-group p {
+    text-align: left;
+}
+
 .top-group * {
     z-index: 10;
 }
 
 .top-group p {
-    max-width: 200px;
+    max-width: 150px;
     text-align: right;
 }
