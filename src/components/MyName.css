@@ -1,3 +1,8 @@
+.svg-name path.color,
+.svg-name stop.color {
+    transition: fill 0.5s ease, stop-color 0.5s ease;
+}
+
 .svg-name {
     width: 30rem;
     height: auto;
@@ -7,20 +12,16 @@
 
 .svg-name:hover path.color {
     fill: var(--hover);
-    transition: var(--color-fade);
 }
 
 .svg-name:hover stop.color {
     stop-color: var(--hover);
-    transition: var(--color-fade);
 }
 
 .svg-name:active path.color {
     fill: var(--text-main);
-    transition: var(--color-fade);
 }
 
 .svg-name:active stop.color {
     stop-color: var(--text-main);
-    transition: var(--color-fade);
 }

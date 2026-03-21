@@ -1,3 +1,17 @@
+.frog-wrapper {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.2rem;
+}
+
+/* Theme Toggles (Keep these as they were) */
+.dark-only { display: none !important; }
+[data-theme='dark'] .dark-only { display: block !important; }
+[data-theme='dark'] .light-only { display: none !important; }
 
 .side-nav-container {
     padding: 40px 20px;
@@ -22,7 +36,10 @@
 .status-link {
     text-decoration: none;
     color: inherit;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* This creates a consistent "buffer" zone */
 }
 
 .status-content {
@@ -30,18 +47,46 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin-top: 5px;
+    margin-top: 0px;
 }
 
 .mini-icon {
-    width: 75px;
-    object-fit: contain;
-    transition: transform 0.3s var(--color-fade);
-    margin-bottom: 0.2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    /* Standard smooth transition for everything */
+    transition: all var(--color-fade);
+    pointer-events: none;
+}
+
+.sun-frog {
+    opacity: 0;
+    z-index: 2;
+}
+
+.sun-frog.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1); /* Matches base scale */
+}
+
+.sun-frog.visible {
+    opacity: 1;
+}
+
+.base-frog {
+    opacity: 1;
+    z-index: 1;
+}
+
+.status-link:hover .base-frog {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.1); /* Subtle scale up */
 }
 
 .status-link:hover .mini-icon {
-    transform: scale(1.1);
+    transform: translate(-50%, -55%) scale(1.15); /* -55% nudges it up slightly more on hover */
 }
 
 .status-link:hover .stat-value {
@@ -50,21 +95,21 @@
 }
 
 .status-link:active .stat-value {
-    color: var(--text-main);
+    color: var(--accent);
     transition: var(--color-fade);
 }
 
-.stat-label {
+/* .stat-label {
     text-transform: lowercase;
     letter-spacing: 0.1rem;
     color: var(--text-main);
     display: block;
     margin-bottom: 1rem;
-}
+} */
 
 .stat-value {
     color: var(--accent);
-    margin: 0; 
+    margin-top: 10px; 
 }
 
 .degree-unit {

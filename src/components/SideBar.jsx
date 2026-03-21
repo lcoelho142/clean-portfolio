@@ -3,6 +3,7 @@ import './SideBar.css'
 import LiveWeather from './LiveWeather'
 import Frog from '../assets/frog.svg'
 import SunFrog from '../assets/sun-frog.svg'
+import OrangeSunFrog from '../assets/sun-frog-orange.svg'
 
 export default function SideBar() {
     const [isHovered, setIsHovered] = useState(false);
@@ -15,7 +16,14 @@ export default function SideBar() {
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
                 >
-                    <img src={isHovered ? SunFrog : Frog} alt="Weather App" className="mini-icon" />
+                    <div className="frog-wrapper">
+                        <img src={Frog} alt="Weather App" className="mini-icon base-frog" />
+
+                        <img src={OrangeSunFrog} alt="Sunny Weather App" 
+                            className={`mini-icon sun-frog light-only ${isHovered ? 'visible' : ''}`} 
+    />
+                        <img src={SunFrog} alt="Sunny Weather App" className={`mini-icon sun-frog dark-only ${isHovered ? 'visible' : ''}`} />
+                    </div>
                     <LiveWeather />
                 </a>
         </div>
