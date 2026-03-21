@@ -2,6 +2,21 @@ h2 {
     font-family: var(--font-jakarta);
 }
 
+.logo {
+    margin-bottom: 10px;
+}
+
+.logo:hover {
+    color: var(--hover);
+    transition: var(--color-fade);
+    cursor: pointer;
+}
+
+.logo:active {
+    color: var(--text-main);
+    transition: var(--color-fade);
+}
+
 .navbar-container {
     background-color: var(--bg-color);
     width: 125px;
@@ -11,7 +26,47 @@ h2 {
     flex-direction: column;
     align-items: center;
     padding: 40px 10px;
+    justify-content: space-between;
 }
+
+.navbar-container p {
+    text-align: center;
+    line-height: 1.4;
+    padding: 0 5px;
+}
+
+.nav-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.nav-links {
+    margin-top: 10px;
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+.nav-links a:hover {
+    color: var(--hover);
+    transition: var(--color-fade);
+    transform: scale(1.10);
+}
+
+.nav-links a:active {
+    color: var(--text-main);
+    transition: var(--color-fade);
+    transform: scale(0.98);
+}
+
+.social-icons {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 8px;
+}
+
 
 h1.main-font {
     font-weight: 200;
@@ -34,6 +89,16 @@ a {
 
 .nav-icon {
     color: var(--accent);
+}
+
+.nav-icon:hover {
+    color: var(--hover);
+    transition: var(--color-fade);
+}
+
+.nav-icon:active {
+    color: var(--accent);
+    transition: var(--color-fade);
 }
 
 p {

@@ -1,8 +1,9 @@
 /* Light Mode (Default) */
 :root {
-  --bg-color: #FFF4E4;
+  --bg-color: #fbf5eb;
   --accent: #6E79B7;
   --text-main: #1C1C1C;
+  --hover: #eb6d32;
   --font-jakarta: 'Plus Jakarta Sans Variable', sans-serif;
   --font-jetbrains: 'JetBrains Mono Variable', monospace;
   --standard-radius: 12px;
@@ -11,6 +12,7 @@
   /* Base size: Usually 16px */
   --text-base: 1rem; 
   --base-padding: 50px;
+  --color-fade: color 0.3s ease;
 }
 
 /* Sizing Utilities */
@@ -68,6 +70,10 @@ body {
   color: var(--text-main);
 }
 
+.accent-color {
+  color: var(--accent);
+}
+
 /* Decoration Groups */
 .card-shadow {
   background-color: white;
@@ -90,8 +96,9 @@ body {
 /* Dark Mode (Activate by class on body or html) */
 [data-theme='dark'] {
   --bg-color: #1C1C1C;
-  --text-main: #FFF4E4;
+  --text-main: #fbf5eb;
   --accent: #A5B1FC;
-  --border-thin: 1px solid #FFF4E4;
-  --border-thick: 2px solid #FFF4E4;
+  --hover: #fbca39;
+  --border-thin: 1px solid #fbf5eb;
+  --border-thick: 2px solid #fbf5eb;
 }

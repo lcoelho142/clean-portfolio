@@ -2,4 +2,25 @@
     width: 30rem;
     height: auto;
     aspect-ratio: 494 / 188;
+    cursor: pointer;
+}
+
+.svg-name:hover path.color {
+    fill: var(--hover);
+    transition: var(--color-fade);
+}
+
+.svg-name:hover stop.color {
+    stop-color: var(--hover);
+    transition: var(--color-fade);
+}
+
+.svg-name:active path.color {
+    fill: var(--text-main);
+    transition: var(--color-fade);
+}
+
+.svg-name:active stop.color {
+    stop-color: var(--text-main);
+    transition: var(--color-fade);
 }

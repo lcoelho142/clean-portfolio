@@ -1,0 +1,30 @@
+.float-container {
+    position: absolute;
+    right: 12%;
+    bottom: 0;
+    z-index: 9;
+    animation: float 6s ease-in-out infinite;
+    width: 600px;
+    height: auto;
+    will-change: transform;
+    transform: translateY(60px);
+}
+
+.float-container:hover {
+    animation-play-state: paused;
+}
+
+.leah-bloom {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes float {
+    0% { top: 0px; }
+    50% { top: -10px; }
+    100% { top: 0px; }
+}

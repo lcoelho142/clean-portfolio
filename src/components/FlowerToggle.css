@@ -37,11 +37,19 @@
 
 /* Label color matches the current mode so it's always readable */
 .flower-btn.day .hover-label {
-  color: var(--accent);
+  color: var(--hover);
+}
+
+.flower-btn.day:active .hover-label {
+  color: var(--text-main);
 }
 
 .flower-btn.night .hover-label {
-  color: var(--accent);
+  color: var(--hover);
+}
+
+.flower-btn.night:active .hover-label {
+  color: var(--text-main);
 }
 
 /* ── SVG ── */

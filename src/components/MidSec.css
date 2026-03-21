@@ -2,24 +2,43 @@
     position: relative;
     flex-grow: 1; /* Tells to fill middle gap */
     height: 100vh;
-    overflow-y: auto; /* Allows middle to scroll */
+    overflow: hidden; /* Allows middle to scroll */
     background-color: var(--bg-color);
 }
 
-.leah-bloom {
+/* .leah-bloom {
     position: absolute;
     width: 100%;
-    max-width: 800px;
-    right: 0;
-    bottom: 0;
+    max-width: 600px;
+    display: block;
+    right: 12%;
+    bottom: 3%;
     z-index: 9;
+    cursor: pointer;
+} */
+
+.float-container {
+    z-index: 999;
 }
+
+.top-group, .bottom-group {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.top-group *, .bottom-group * {
+    pointer-events: auto;
+}
+
+
 
 .top-group {
     display: flex;
     justify-content: space-between;
     align-items: top;
     padding: var(--base-padding);
+    margin-bottom: 37px;
 }
 
 .bottom-group {
@@ -29,6 +48,9 @@
     padding: var(--base-padding);
     gap: 1rem;
     max-width: 525px;
+    position: relative;
+    z-index: 1;
+    margin-top: -10px;
 }
 
 .bottom-group p {
@@ -42,4 +64,47 @@
 .top-group p {
     max-width: 150px;
     text-align: right;
+}
+
+.work-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+    border: none;
+    background-color: var(--background-color);
+}
+
+
+.work-btn:hover p {
+    color: var(--hover);
+    cursor: pointer;
+    font-style: italic;
+}
+
+.work-btn:active p {
+    color: var(--accent);
+    transition: var(--color-fade);
+}
+
+.animated-underline {
+    position: relative;
+    text-decoration: none;
+    display: inline-block;
+    color: inherit;
+}
+
+.animated-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 0;
+    height: 2px;
+    background-color: var(--hover);
+    transition: width 0.4s ease-in-out;
+}
+
+.animated-underline:hover::after {
+    width: 100%;
 }
