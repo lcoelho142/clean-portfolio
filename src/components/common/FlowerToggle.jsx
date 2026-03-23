@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTheme } from "../ThemeContext";
+import { useTheme } from "../../ThemeContext";
 import "./FlowerToggle.css";
 
 export default function FlowerToggle() {

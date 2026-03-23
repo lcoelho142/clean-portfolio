@@ -19,7 +19,7 @@ body {
   overflow: hidden;
 }
 
-.app-container > * {
-  /* Prevents from shrinking to 0 */
-  flex-shrink: 0;
+.main-content-wrapper {
+  flex-grow: 1;
+  overflow-y: auto;
 }

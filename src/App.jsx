@@ -1,13 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import './App.css'
 import { ThemeProvider } from './ThemeContext.jsx'
 
 // Import page components from Pages Folder
-import HomePage from './components/Pages/HomePage.jsx'
-import WorkPage from './components/Pages/WorkPage.jsx'
-import PlayPage from './components/Pages/PlayPage.jsx'
-import AboutPage from './components/Pages/AboutPage.jsx'
+import HomePage from './pages/HomePage.jsx'
+import WorkPage from './pages/WorkPage.jsx'
+import PlayPage from './pages/PlayPage.jsx'
+import AboutPage from './pages/AboutPage.jsx'
 
 export default function App() {
   return (

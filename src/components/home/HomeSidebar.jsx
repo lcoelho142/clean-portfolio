@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import './SideBar.css'
-import LiveWeather from './LiveWeather'
-import Frog from '../assets/frog.svg'
-import SunFrog from '../assets/sun-frog.svg'
-import OrangeSunFrog from '../assets/sun-frog-orange.svg'
+import './HomeSidebar.css';
+import LiveWeather from './LiveWeather';
+import Frog from '../../assets/frog.svg'
+import SunFrog from '../../assets/sun-frog.svg'
+import OrangeSunFrog from '../../assets/sun-frog-orange.svg'
 
-export default function SideBar() {
+export default function HomeSidebar() {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <aside className="side-nav-container">
-        <div className="side-nav-right">
-                {/* Currently Section w/ App Icon */}
+        <div className="home-sidebar-content">
                 <a href="https://weather-app-mauve-three-68.vercel.app/" target="_blank" rel="noreferrer" className="status-link"
                     onMouseEnter={() => setIsHovered(true)}
                     onMouseLeave={() => setIsHovered(false)}
@@ -21,12 +19,11 @@ export default function SideBar() {
 
                         <img src={OrangeSunFrog} alt="Sunny Weather App" 
                             className={`mini-icon sun-frog light-only ${isHovered ? 'visible' : ''}`} 
-    />
+                        />
                         <img src={SunFrog} alt="Sunny Weather App" className={`mini-icon sun-frog dark-only ${isHovered ? 'visible' : ''}`} />
                     </div>
                     <LiveWeather />
                 </a>
         </div>
-        </aside>
-    )
+    );
 }

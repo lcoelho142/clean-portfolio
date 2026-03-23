@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 
 import './HomeContent.css'
-import MyName from './MyName';
-import HLine from './HLine'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSquareArrowUpRight } from '@fortawesome/free-solid-svg-icons'
+import MyName from '../common/MyName';
+import HLine from '../common/HLine'
 import FloralHero from './FloralHero';
 
 export default function HomeContent() {

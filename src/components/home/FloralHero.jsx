@@ -1,5 +1,5 @@
 import './FloralHero.css'
-import LeahBloom from '../assets/leah-bloom.png';
+import LeahBloom from '../../assets/leah-bloom.png';
 
 const FloralHero = () => {
     return (

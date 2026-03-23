@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import './NavBar.css'
-import FlowerToggle from "./FlowerToggle"
-import HLine from './HLine';
+import './NavBar.css';
+import FlowerToggle from "../common/FlowerToggle"
+import HLine from '../common/HLine';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import {faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'

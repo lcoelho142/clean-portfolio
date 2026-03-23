@@ -13,26 +13,6 @@
 [data-theme='dark'] .dark-only { display: block !important; }
 [data-theme='dark'] .light-only { display: none !important; }
 
-.side-nav-container {
-    padding: 40px 20px;
-    height: 100vh;
-    width: 125px;
-    background-color: var(--bg-color);
-    border-left: var(--border-thin);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.side-nav-right {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    padding: 1rem;
-    align-items: center;
-    text-align: center;
-}
-
 .status-link {
     text-decoration: none;
     color: inherit;
@@ -98,14 +78,6 @@
     color: var(--accent);
     transition: var(--color-fade);
 }
-
-/* .stat-label {
-    text-transform: lowercase;
-    letter-spacing: 0.1rem;
-    color: var(--text-main);
-    display: block;
-    margin-bottom: 1rem;
-} */
 
 .stat-value {
     color: var(--accent);
