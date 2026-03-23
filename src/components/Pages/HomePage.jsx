@@ -1,15 +1,13 @@
-import NavBar from "../NavBar"
-import MidSec from "../MidSec"
-import SideBar from "../SideBar"
+// src/components/Pages/HomePage.jsx
+import Layout from "../Layout";
+import HomeContent from "../HomeContent";
 
 export default function HomePage() {
     return (
-        <div className="app-container">
-            <NavBar />
-            <MidSec />
-            <SideBar />
-        </div>
-    )
+        <Layout>
+            <HomeContent />
+        </Layout>
+    );
 }
 
 

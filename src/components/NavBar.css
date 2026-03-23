@@ -1,9 +1,11 @@
-h2 {
-    font-family: var(--font-jakarta);
-}
-
 .logo {
     margin-bottom: 10px;
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 25px;
+    font-weight: 200;
 }
 
 .logo:hover {
@@ -67,13 +69,6 @@ h2 {
     margin-bottom: 8px;
 }
 
-
-h1.main-font {
-    font-weight: 200;
-    text-transform: uppercase;
-    text-align: center;
-}
-
 .flex-column {
     display: flex;
     flex-direction: column;
@@ -103,4 +98,36 @@ a {
 
 p {
     text-align: center;
+}
+
+.back-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.back-arrow-icon {
+    font-size: 2rem;;
+}
+
+.back-text {
+    font-size: var(--text-base);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.back-button-container:hover .back-arrow-icon,
+.back-button-container:hover .back-text {
+    color: var(--hover);
+    transition: var(--color-fade);
+}
+
+.back-button-container:active .back-arrow-icon,
+.back-button-container:active .back-text {
+    color: var(--accent);
+    transition: var(--color-fade);
 }

@@ -26,3 +26,5 @@ dist-ssr
 # Private Environment Variables
 .env 
 .env.local
+
+notes.txt
