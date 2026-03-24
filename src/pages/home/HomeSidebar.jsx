@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './HomeSidebar.css';
-import LiveWeather from './LiveWeather';
+import LiveWeather from '../../components/home/LiveWeather';
 import Frog from '../../assets/frog.svg'
 import SunFrog from '../../assets/sun-frog.svg'
 import OrangeSunFrog from '../../assets/sun-frog-orange.svg'

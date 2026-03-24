@@ -1,13 +1,17 @@
+// src/components/Pages/HomePage.jsx
+import Layout from "../../components/layout/Layout";
+import './HomePage.css';
+import HomeSidebar from "./HomeSidebar";
+
 import { Link } from "react-router-dom";
 
-import './HomeContent.css'
-import MyName from '../common/MyName';
-import HLine from '../common/HLine'
-import FloralHero from './FloralHero';
+import MyName from '../../components/common/MyName';
+import HLine from '../../components/common/HLine'
+import FloralHero from '../../components/home/FloralHero';
 
-export default function HomeContent() {
+export default function HomePage() {
     return (
-        <>
+        <Layout sidebarContent={<HomeSidebar />}>
             <main className="main-section">
                 <div className="top-group">
                     <Link to="/about"><MyName className="svg-name" /></Link>
@@ -26,6 +30,8 @@ export default function HomeContent() {
 
                 <Link to="/play"><FloralHero /></Link>
             </main>
-        </>
-    )
+        </Layout>
+    );
 }
+
+

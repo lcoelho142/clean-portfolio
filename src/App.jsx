@@ -3,10 +3,10 @@ import './App.css'
 import { ThemeProvider } from './ThemeContext.jsx'
 
 // Import page components from Pages Folder
-import HomePage from './pages/HomePage.jsx'
-import WorkPage from './pages/WorkPage.jsx'
-import PlayPage from './pages/PlayPage.jsx'
-import AboutPage from './pages/AboutPage.jsx'
+import HomePage from './pages/home/HomePage.jsx'
+import WorkPage from './pages/work/WorkPage.jsx'
+import PlayPage from './pages/play/PlayPage.jsx'
+import AboutPage from './pages/about/AboutPage.jsx'
 
 export default function App() {
   return (
