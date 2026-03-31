@@ -10,7 +10,6 @@ import { faEnvelope, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import {faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
 import '../../pages/home/HomeSidebar.css';
-import LiveWeather from '../home/LiveWeather';
 import Frog from '../../assets/frog.svg';
 
 export default function NavBar() {
@@ -67,8 +66,8 @@ export default function NavBar() {
                         </a>
                     </div>
                     <div>
-                        <img src={Frog} alt="Frog Logo" />
-                        <LiveWeather />
+                        <a className="frog-nav" href="https://weather-app-mauve-three-68.vercel.app/" target="_blank" rel="noreferrer" ><img src={Frog} alt="Frog Logo" /></a>
+
                     </div>
                     <p className="main-font text-xs font-light">© 2026<br/>Leah Made This.<br/>All Rights Reserved</p>
                 </div>

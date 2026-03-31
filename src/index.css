@@ -37,6 +37,11 @@
 .font-medium-italic { font-weight: 500; font-style: italic; }
 .font-bold-italic   { font-weight: 700; font-style: italic; }
 
+
+.fluid-text { font-size: clamp(1.5rem, 5vw, 3rem); }
+.fluid-padding { padding: clamp(1rem, 2vw, 2rem); }
+
+
 body {
     font-size: var(--text-base);
   }
