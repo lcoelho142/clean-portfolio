@@ -1,0 +1,11 @@
+/* Layout.css */
+@media (max-width: 768px) {
+    .app-container {
+        display: block; /* Remove the row flexbox */
+        padding-top: 60px; /* Space for the Top Nav */
+        padding-bottom: 60px; /* Space for the Bottom Footer */
+    }
+}
+.main-content {
+    min-height: calc(100vh - 120px);
+}

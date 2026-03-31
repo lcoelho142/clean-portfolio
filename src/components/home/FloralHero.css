@@ -28,3 +28,12 @@
     50% { top: -20px; }
     100% { top: 0px; }
 }
+
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 768px) { 
+    .float-container {
+        width: clamp(400px, 14vw, 600px);
+        transition: width 0.3s ease-in-out;
+    }
+}

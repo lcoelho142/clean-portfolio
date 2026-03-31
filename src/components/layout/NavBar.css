@@ -19,6 +19,10 @@
     transition: var(--color-fade);
 }
 
+.nav-vline {
+    display: none;
+}
+
 .navbar-container {
     background-color: var(--bg-color);
     width: 125px;
@@ -37,7 +41,7 @@
     padding: 0 5px;
 }
 
-.nav-section {
+.nav-top-section {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,4 +134,131 @@ p {
 .back-button-container:active .back-text {
     color: var(--accent);
     transition: var(--color-fade);
+}
+
+
+
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    /* 1. Fixed typo to match your HTML class */
+    .navbar-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        min-height: 70px;
+        flex-direction: row; /* Horizontal layout */
+        justify-content: space-between;
+        align-items: center;
+        border-right: none;
+        border-bottom: var(--border-thin);
+        padding: 10px 20px;
+        z-index: 1000;
+        padding: 0 15px; /* Slight horizontal breathing room */
+        height: 70px;
+    }
+
+    /* 2. Change the inner groupings from vertical stacks to horizontal rows */
+    .nav-top-section {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-color);
+        /* gap: 0; */
+    }
+
+    .logo,
+    .nav-links {
+        flex: 1;
+        display: flex;
+    }
+
+    /* 3. Adjust the logo so it doesn't wrap aggressively */
+    .logo { 
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: start;
+        text-align: left;
+        font-size: 0.8rem;
+        white-space: nowrap;
+        margin-bottom: 0;
+        width: auto;
+    }
+
+    .nav-vline {
+        display: block;
+        margin: 0 10px;
+    }
+
+    /* 4. Keep links side-by-side */
+    .nav-links { 
+        grid-column: 3;
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        justify-self: end;
+        flex-direction: row;
+        gap: 12px;
+        margin-top: 0;
+        width: auto;
+    }
+
+    .flower-toggle-wrapper {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+    }
+
+    /* 5. Hide the copyright text on mobile so it doesn't break the layout */
+    .navbar-container p {
+        display: none; 
+    }
+    
+    /* Optional: Hide social icons in the top bar if you plan to move them to the bottom sidebar/footer */
+
+    .navbar-container .nav-divider {
+        display: none !important;
+    }
+
+    .nav-spacer,
+    .back-text,
+    .back-arrow-icon {
+        display: none !important;
+    }
+
+    .nav-top-section > *:not(.logo):not(.flower-toggle-wrapper):not(.nav-links) {
+        display: none !important;
+    }
+
+    .nav-bottom-section {
+        position: fixed;
+        display: flex;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        min-height: 70px;
+        flex-direction: row-reverse; /* Horizontal layout */
+        background-color: var(--bg-color);
+        justify-content: space-between;
+        align-items: center;
+        border-right: none;
+        border-top: var(--border-thin);
+        padding: 10px 20px;
+        z-index: 1000;
+        padding: 0 15px; /* Slight horizontal breathing room */
+        height: 70px;
+    }
+
+    .nav-bottom-section > p {
+        display: block;
+        text-align: left;
+    }
+
+    .social-icons {
+        gap: 20px;
+}
+
 }

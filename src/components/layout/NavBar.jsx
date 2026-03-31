@@ -4,9 +4,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './NavBar.css';
 import FlowerToggle from "../common/FlowerToggle"
 import HLine from '../common/HLine';
+import VLine from '../common/VLine';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import {faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+
+import '../../pages/home/HomeSidebar.css';
+import LiveWeather from '../home/LiveWeather';
+import Frog from '../../assets/frog.svg';
 
 export default function NavBar() {
     const location = useLocation();
@@ -23,15 +28,19 @@ export default function NavBar() {
     return (
         <>
             <div className="navbar-container" >
-                <div className="nav-section flex-column flex-center">
+                <div className="nav-top-section">
                     <Link to="/" className="logo main-font text-2xl">Leah Made This</Link>
-                    <FlowerToggle />
+
+                    <VLine className="nav-vline" />
+                    <div className="flower-toggle-wrapper">
+                        <FlowerToggle />
+                    </div>
                     <div className="nav-links flex-column flex-center">
                         <Link to="/work" className="secondary-font">work</Link>
                         <Link to="/play" className="secondary-font" >play</Link>
                         <Link to="/about" className="secondary-font" >about</Link>
                     </div>
-                    <HLine offset="20px" marginY="20px" />
+                    <HLine className="nav-divider" offset="20px" marginY="20px" />
                 </div>
 
                 {!isHomePage && (
@@ -41,11 +50,11 @@ export default function NavBar() {
                 </div>
                 )}
 
-                <div style={{ flexGrow: 1 }}></div>
+                <div className="nav-spacer" style={{ flexGrow: 1 }}></div>
             
-                <HLine offset="20px" marginY="20px" />
+                <HLine className="nav-divider" offset="20px" marginY="20px" />
 
-                <div className="nav-section flex-column flex-center">
+                <div className="nav-bottom-section">
                     <div className="social-icons">
                         <a href="mailto:leahmadethis4@gmail.com" target="_blank" rel="noreferrer">
                             <FontAwesomeIcon icon={faEnvelope} size="xl" className="nav-icon" />
@@ -56,6 +65,10 @@ export default function NavBar() {
                         <a href="https://github.com/lcoelho142/" target="_blank" rel="noreferrer">
                             <FontAwesomeIcon icon={faGithub} size="xl" className="nav-icon" />
                         </a>
+                    </div>
+                    <div>
+                        <img src={Frog} alt="Frog Logo" />
+                        <LiveWeather />
                     </div>
                     <p className="main-font text-xs font-light">© 2026<br/>Leah Made This.<br/>All Rights Reserved</p>
                 </div>

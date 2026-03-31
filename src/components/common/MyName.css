@@ -25,3 +25,11 @@
 .svg-name:active stop.color {
     stop-color: var(--text-main);
 }
+
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    .svg-name {
+        width: 20rem;
+    }
+}

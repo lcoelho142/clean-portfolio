@@ -6,17 +6,6 @@
     background-color: var(--bg-color);
 }
 
-/* .leah-bloom {
-    position: absolute;
-    width: 100%;
-    max-width: 600px;
-    display: block;
-    right: 12%;
-    bottom: 3%;
-    z-index: 9;
-    cursor: pointer;
-} */
-
 .float-container {
     z-index: 999;
 }
@@ -38,7 +27,7 @@
     justify-content: space-between;
     align-items: top;
     padding: var(--base-padding);
-    margin-bottom: 15.5px;
+    margin-bottom: 30.5px;
 }
 
 .bottom-group {
@@ -107,4 +96,15 @@
 
 .animated-underline:hover::after {
     width: 100%;
+}
+
+
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    .top-group > p {
+        font-size: .75rem;
+    }
+
+
 }

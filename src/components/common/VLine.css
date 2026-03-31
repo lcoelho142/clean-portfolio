@@ -1,0 +1,11 @@
+.vline-container {
+    position: relative;
+    width: 1px;
+    align-self: stretch; /* fills the height of its flex parent */
+}
+
+.vline {
+    position: absolute;
+    left: 0;
+    border-left: var(--border-thin);
+}
