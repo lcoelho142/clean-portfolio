@@ -26,6 +26,7 @@
 .navbar-container {
     background-color: var(--bg-color);
     width: 125px;
+    min-width: 125px;
     height: 100vh;
     border-right: var(--border-thin);
     display: flex;
@@ -69,6 +70,8 @@
 
 .social-icons {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 2px;
     margin-bottom: 8px;
 }
@@ -186,9 +189,10 @@ p {
         grid-row: 1;
         justify-self: start;
         text-align: left;
-        font-size: 0.8rem;
+        font-size: 1rem;
         white-space: nowrap;
         margin-bottom: 0;
+        font-weight: 300;
         width: auto;
     }
 

@@ -2,6 +2,7 @@
     padding: 40px 20px;
     height: 100vh;
     width: 125px;
+    min-width: 125px;
     background-color: var(--bg-color);
     border-left: var(--border-thin);
     display: flex;

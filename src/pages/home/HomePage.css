@@ -1,8 +1,8 @@
 .main-section {
     position: relative;
-    flex-grow: 1; /* Tells to fill middle gap */
+    flex-grow: 1;
     height: 100vh;
-    overflow: hidden; /* Allows middle to scroll */
+    overflow: hidden;
     background-color: var(--bg-color);
 }
 
@@ -56,45 +56,39 @@
 }
 
 .work-btn {
-    display: flex;
-    justify-content: space-between;
+    display: inline-flex;
     align-items: center;
-    gap: .5rem;
     border: none;
     background-color: var(--background-color);
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    color: var(--accent);
 }
 
 
-.work-btn:hover p {
+.work-btn:hover {
     color: var(--hover);
-    cursor: pointer;
     font-style: italic;
 }
 
-.work-btn:active p {
+.work-btn:active {
     color: var(--accent);
     transition: var(--color-fade);
 }
 
-.animated-underline {
-    position: relative;
-    text-decoration: none;
-    display: inline-block;
-    color: inherit;
-}
-
-.animated-underline::after {
+.work-btn::after {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -8px;
+    bottom: -4px;
     width: 0;
     height: 2px;
     background-color: var(--hover);
     transition: width 0.4s ease-in-out;
 }
 
-.animated-underline:hover::after {
+.work-btn:hover::after {
     width: 100%;
 }
 
@@ -104,6 +98,7 @@
 @media (max-width: 768px) {
     .top-group > p {
         font-size: .75rem;
+        line-height: 1.5em;
     }
 
 
