@@ -86,13 +86,30 @@ body {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 30px;
+}
+
+
+
+
+@media (max-width: 1024px) {
+  :root {
+    --base-padding: 30px;
+  }
 }
 
 @media (max-width: 768px) {
   :root {
-    --text-base: 0.875rem; /* Everything on mobile shrinks by 12.5% automatically */
+    --base-padding: 30px;
   }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --text-base: 0.875rem; /* Everything on mobile shrinks by 12.5% automatically */
+    --base-padding: 20px;
+  }
+
   body {
     font-size: var(--text-base);
   }

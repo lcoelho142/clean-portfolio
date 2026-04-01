@@ -1,13 +1,20 @@
 .float-container {
     position: absolute;
     right: 12%;
-    bottom: 0;
+    top: 50%;
     z-index: 9;
-    animation: float 6s ease-in-out infinite;
-    width: 600px;
+
+    width: 90%;
+    max-width: 600px;
     height: auto;
+
+    transform: translateY(-50%);
+
+    animation: float 6s ease-in-out infinite;
     will-change: transform;
-    transform: translateY(60px);
+    transition: width 0.3 ease-in-out;
+    margin: 0 auto;
+    pointer-events: auto;
 }
 
 .float-container:hover {
@@ -19,21 +26,52 @@
     height: auto;
     display: block;
     cursor: pointer;
-    margin: 0;
-    padding: 0;
 }
 
 @keyframes float {
-    0% { top: 0px; }
+    0%, 100% {
+        transform: translateY(-50%);
+    }
+    50% {
+        transform: translateY(calc(-50% - 20px));
+    }
+    /* 0% { top: 0px; }
     50% { top: -20px; }
-    100% { top: 0px; }
+    100% { top: 0px; } */
 }
 
 /* ---------------------------------------------------------------------- */
 
+@media (max-width: 1280px) {
+    .float-container {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .float-container {
+        max-width: 400px;
+        top: 50%;
+    }
+}
+
 @media (max-width: 768px) { 
     .float-container {
-        width: clamp(300px, 14vw, 600px);
-        transition: width 0.3s ease-in-out;
+        max-width: 300px;
+        top: 42%;
+        right: 15%;
+        z-index: 10;
+    }
+}
+
+@media (max-width: 640px) {
+    .float-container {
+        width: 75%;
+        max-width: 280px;
+        top: 40%;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        z-index: 10;
     }
 }

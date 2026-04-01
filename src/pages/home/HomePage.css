@@ -25,9 +25,20 @@
 .top-group {
     display: flex;
     justify-content: space-between;
-    align-items: top;
+    align-items: flex-start;
     padding: var(--base-padding);
     margin-bottom: 30.5px;
+}
+
+.svg-name {
+    width: 30rem;
+    height: auto;
+    display: block;
+}
+
+.top-group > a {
+    flex-shrink: 0;
+    display: flex;
 }
 
 .bottom-group {
@@ -36,7 +47,7 @@
     align-items: flex-start;
     padding: var(--base-padding);
     gap: 1rem;
-    max-width: 525px;
+    max-width: 32em;
     position: relative;
     z-index: 1;
     margin-top: -10px;
@@ -51,8 +62,14 @@
 }
 
 .top-group p {
-    max-width: 150px;
+    font-size: 1.25rem;
+    max-width: 7.5em;
+    line-height: 1.4;
     text-align: right;
+}
+
+.top-group p, .bottom-group h2 {
+    text-wrap: balance;
 }
 
 .work-btn {
@@ -95,11 +112,16 @@
 
 /* ---------------------------------------------------------------------- */
 
-@media (max-width: 768px) {
-    .top-group > p {
-        font-size: .75rem;
-        line-height: 1.5em;
+
+@media (max-width: 1280px) {
+    .top-group p {
+        font-size: 1rem;
     }
+}
 
-
+@media (max-width: 768px) {
+    .top-group p {
+        font-size: .875rem;
+        line-height: 1.3;
+    }
 }

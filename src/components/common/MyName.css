@@ -6,6 +6,7 @@
 .svg-name {
     width: 30rem;
     height: auto;
+    display: block;
     aspect-ratio: 494 / 188;
     cursor: pointer;
 }
@@ -28,8 +29,28 @@
 
 /* ---------------------------------------------------------------------- */
 
+
+@media (max-width: 1280px) {
+    .svg-name {
+        max-width: 25rem;
+        transition: width 0.3s ease-in-out;
+    }
+}
+
+@media (max-width: 1024px) {
+    .svg-name {
+        max-width: 20rem;
+    }
+}
+
 @media (max-width: 768px) {
     .svg-name {
-        width: 20rem;
+        max-width: 20rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .svg-name {
+        max-width: 17rem;
     }
 }
