@@ -54,3 +54,9 @@
         max-width: 17rem;
     }
 }
+
+@media (max-width: 420px) {
+    .svg-name {
+        max-width: 12rem;
+    }
+}

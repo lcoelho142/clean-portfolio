@@ -115,6 +115,17 @@ body {
   }
 }
 
+@media (max-width: 480px) {
+  :root {
+    --text-base: 0.875rem; /* Everything on mobile shrinks by 12.5% automatically */
+    --base-padding: 20px;
+  }
+
+  body {
+    font-size: var(--text-base);
+  }
+}
+
 
 
 /* Dark Mode (Activate by class on body or html) */

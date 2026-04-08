@@ -27,7 +27,7 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: var(--base-padding);
-    margin-bottom: 30.5px;
+    margin-bottom: 2.5em;
 }
 
 .svg-name {
@@ -117,11 +117,23 @@
     .top-group p {
         font-size: 1rem;
     }
+    .top-group {
+        margin-bottom: 1em;
+    }
+    .bottom-group h2 {
+        font-size: 1.7rem;
+    }
 }
 
 @media (max-width: 768px) {
     .top-group p {
         font-size: .875rem;
         line-height: 1.3;
+    }
+}
+
+@media (max-width: 420px) {
+    .top-group p {
+        font-size: .7rem;
     }
 }
