@@ -1,15 +1,15 @@
-import Layout from "../../components/layout/Layout";
+import Layout from "../../components/layout/Layout.jsx";
 import './WorkPage.css';
-import HLine from '../../components/common/HLine';
-import WorkProj from '../work/WorkPage';
+import WorkProj from '../../components/work/WorkProj.jsx';
+import WorkSidebar from '../work/WorkSidebar.jsx'
 
 export default function WorkPage() {
     return (
-        <Layout>
+        <Layout sidebarContent={<WorkSidebar />}>
             <main className="main-section">
                 <h1 className="secondary-font">Work</h1>  
-                <div>
-                    <WorkProj />
+                <div className="card-container">
+                    <WorkProj></WorkProj>
                 </div>
             </main>
         </Layout>

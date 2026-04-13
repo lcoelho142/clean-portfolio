@@ -15,6 +15,7 @@
   --text-base: 1rem; 
   --base-padding: 50px;
   --color-fade: 0.3s ease-in-out;
+  min-height: 100vh;
 }
 
 /* Sizing Utilities */
@@ -46,6 +47,9 @@
 
 body {
     font-size: var(--text-base);
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
   }
 
 .hline { 

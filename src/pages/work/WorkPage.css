@@ -1,0 +1,29 @@
+.main-section {
+    overflow: auto;
+    padding: var(--base-padding);
+}
+
+.main-section > h1 {
+    text-align: center;
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+
+}
+
+.card-container::before {
+  content: "";
+  position: absolute;
+  z-index: 24;
+  background-color: var(--text-main);
+  width: 1px;
+  /* use vw for scaling of vertical line across breakpoints */
+  height: 45vw;
+  min-height: 350px;
+}
