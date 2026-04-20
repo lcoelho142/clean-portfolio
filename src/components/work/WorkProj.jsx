@@ -6,28 +6,28 @@ function WorkProjCard({ number, category, title, dateRange, imageSrc, imageAlt }
                 <h1 className="secondary-font text-9xl font-bold accent-color">
                     {number}
                 </h1>
-                <div style={{
-                    width: '100%',
-                    aspectRatio: '16 / 9',
-                    overflow: 'hidden'
-                    // backgroundColor: '#e0e0e0',
-                    // display: 'flex',
-                    // alignItems: 'center',
-                    // justifyItems: 'center'
-                }}>
-                    <img 
-                        src={imageSrc}
-                        alt={imageAlt || `${title} project preview`}
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    />
-                    {/* <span style={{ color: '#666' }}>Image Pending...</span> */}
-                </div>
+
+                <a href="#" className="proj-img-container">
+                    <div style={{
+                        width: '100%',
+                        aspectRatio: '16 / 9',
+                        overflow: 'hidden'
+                    }}>
+                        <img 
+                            src={imageSrc}
+                            alt={imageAlt || `${title} project preview`}
+                            className="proj-img"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover',  zIndex: '1' }}
+                        />
+                    </div>
+                </a>
+
                 <div className="text-group">
                     <h2 className="secondary-font">
                         <span className="italic font-extrabold">{category}:</span> {title}
                     </h2>
                     <p className="main-font">{dateRange}</p>
-                    <button className="main-font font-bold accent-color">view project</button>
+                    <button className="btn main-font font-bold accent-color">view project</button>
                 </div>
             </div>
     );
@@ -54,11 +54,11 @@ const projectData = [
         },
         {
             id: "03", 
-            category: "Web Development", 
-            title: "Professional Portfolio", 
+            category: "Web Dev", 
+            title: "Portfolio Site", 
             dates: "02.09.26 — PRESENT",
             imagePath: "/portfolio-thumbnail.png",
-            altText: "Professional Portfolio web design & development"
+            altText: "Website Portfolio web design & development"
         },
     ];
 
