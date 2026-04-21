@@ -8,8 +8,9 @@
     align-items: center;
 }
 
-.proj-card > h1 {
+.number-id {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -18,13 +19,13 @@
     paint-order: stroke fill;
 }
 
-.proj-card > h1:hover {
+.number-id:hover {
     color: var(--hover);
     transition: var(--color-fade);
     cursor: pointer;
 }
 
-.proj-card > h1:active {
+.number-id:active {
     color: var(--accent);
     transition: var(--color-fade);
 }
@@ -106,8 +107,15 @@
         gap: 30px;
     }
 
-    .proj-card > h1 {
+    .proj-card > a:first-of-type {
         align-self: flex-end;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .number-id {
+        text-align: right;
     }
 
     .text-group {
