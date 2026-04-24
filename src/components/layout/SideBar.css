@@ -18,3 +18,9 @@
     align-items: center;
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .side-nav-container {
+        display: none;
+    }
+}

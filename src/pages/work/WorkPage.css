@@ -2,13 +2,13 @@ html, body {
     scroll-behavior: smooth;
 }
 
-.main-section {
+.work-main-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: auto;
     padding: 0 var(--base-padding);
     scroll-behavior: smooth;
+    background-color: var(--bg-color);
 }
 
 .work {
@@ -82,5 +82,11 @@ html, body {
 @media (max-width: 1024px) {
     .card-container::before {
         display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .work {
+        top: 70px;
     }
 }

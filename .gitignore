@@ -28,3 +28,8 @@ dist-ssr
 .env.local
 
 notes.txt
+
+# .gitignore
+project_context.txt
+pack.cjs
+

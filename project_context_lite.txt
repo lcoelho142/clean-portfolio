@@ -1,0 +1,2018 @@
+
+// --- FILE: src/App.css ---
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* outline: 1px rgba(255, 0, 0, 0.324) solid; */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+
+.app-container {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content-wrapper {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+// --- FILE: src/App.jsx ---
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './App.css'
+import { ThemeProvider } from './ThemeContext.jsx'
+
+// Import page components from Pages Folder
+import HomePage from './pages/home/HomePage.jsx'
+import WorkPage from './pages/work/WorkPage.jsx'
+import PlayPage from './pages/play/PlayPage.jsx'
+import AboutPage from './pages/about/AboutPage.jsx'
+
+import SocialSpark from './pages/work/social-spark/SocialSpark.jsx'
+import WeatherApi from './pages/work/weather-api/WeatherApi.jsx'
+import Portfolio from './pages/work/portfolio/Portfolio.jsx'
+
+
+export default function App() {
+  return (
+      <ThemeProvider>
+        <BrowserRouter>
+          <Routes>
+            // Default HomePage
+            <Route path="/" element={<HomePage />} />
+            <Route path="/work" element={<WorkPage />} />
+
+            <Route path="/work/social-spark" element={<SocialSpark />} />
+            <Route path="/work/weather-api" element={<WeatherApi />} />
+            <Route path="/work/portfolio" element={<Portfolio />} />
+
+            <Route path="/play" element={<PlayPage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+  );
+}
+
+
+// --- FILE: src/ThemeContext.jsx ---
+// 1. These are React imports you need
+import { createContext, useContext, useState } from "react";
+
+// 2. Creates an empty container that will hold your theme state
+const ThemeContext = createContext();
+
+// 3. This is the component you'll wrap your App with
+export function ThemeProvider({ children }) {
+
+// 4. Tracks whether dark mode is on or off
+    const [isDark, setIsDark] = useState(false);
+
+// 5. This is the function that runs when the flower is clicked
+    const toggle = () => {
+        setIsDark((prev) => {
+            const next = !prev;
+      // 6. THIS is the key line — it puts data-theme="dark" on your
+      //    <html> tag, which activates your [data-theme='dark'] block
+      //    in index.css automatically
+            document.documentElement.dataset.theme = next ? "dark" : "";
+        return next;
+    });
+};
+
+// 7. Makes isDark and toggle available to any component in your app
+return (
+    <ThemeContext.Provider value={{ isDark, toggle }}>
+        {children}
+    </ThemeContext.Provider>
+    );
+}
+
+// 8. This is a shortcut so other components can easily read the theme
+export function useTheme() {
+    return useContext(ThemeContext);
+}
+
+// --- FILE: src/components/common/FlowerToggle.css ---
+/* FlowerToggle.css */
+
+/* ── Button reset ── */
+.flower-btn {
+  width: 42px;
+  height: 42px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  /* position: relative lets the label sit on top of the svg */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* ── Hover label ── */
+/* Sits centered over the flower, invisible by default.
+   On hover it scales up to full size as the flower shrinks away. */
+.hover-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: var(--text-base);
+  transform: translate(-50%, -50%) scale(1.1);
+  font-family: var(--font-jetbrains);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Label color matches the current mode so it's always readable */
+.flower-btn.day .hover-label {
+  color: var(--hover);
+}
+
+.flower-btn.day:active .hover-label {
+  color: var(--text-main);
+}
+
+.flower-btn.night .hover-label {
+  color: var(--hover);
+}
+
+.flower-btn.night:active .hover-label {
+  color: var(--text-main);
+}
+
+/* ── SVG ── */
+.flower-svg {
+  width: 42px;
+  height: 42px;
+  overflow: visible;
+}
+
+.flower-svg-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ── Scale swap on hover ── */
+/* SVG shrinks and fades out */
+.flower-btn:hover .flower-svg-wrap {
+  opacity: 0;
+  transform: scale(0.7)
+}
+
+/* Label grows in — overrides the default scale(1.1) resting state */
+.flower-btn:hover .hover-label {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ── Day colors ── */
+.flower-btn.day .petal-indigo {
+  fill: var(--accent);
+}
+
+.flower-btn.day .petal-dark {
+  fill: var(--text-main);
+}
+
+/* ── Night colors (inverted) ── */
+.flower-btn.night .petal-indigo {
+  fill: var(--accent);
+}
+
+.flower-btn.night .petal-dark {
+  fill: var(--text-main);
+}
+
+/* ── Color transition ── */
+.flower-btn .petal-indigo,
+.flower-btn .petal-dark {
+  transition: fill 0.55s ease;
+}
+
+
+
+// --- FILE: src/components/common/FlowerToggle.jsx ---
+import { useState } from "react";
+import { useTheme } from "../../ThemeContext";
+import "./FlowerToggle.css";
+
+export default function FlowerToggle() {
+  const { isDark, toggle } = useTheme();
+  const [rotation, setRotation] = useState(0);
+  const [spinning, setSpinning] = useState(false);
+
+  const handleClick = () => {
+    if (spinning) return;
+    setSpinning(true);
+    toggle();
+    setRotation((prev) => prev + 180);
+    setTimeout(() => setSpinning(false), 700);
+  };
+
+  return (
+    <button
+      className={`flower-btn ${isDark ? "night" : "day"}`}
+      onClick={handleClick}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+    >
+      {/* Label shows the mode you'll switch TO on click.
+          It sits in the same space as the SVG and is revealed
+          on hover via CSS — the SVG shrinks away as it grows in. */}
+      <span className="hover-label">
+        {isDark ? "day" : "night"}
+      </span>
+
+        <span className="flower-svg-wrap">
+      <svg
+        className="flower-svg"
+        width="42"
+        height="42"
+        viewBox="0 0 42 42"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{
+          transformOrigin: "21px 21px",
+          transform: `rotate(${rotation}deg)`,
+          transition: spinning
+            ? "transform 0.65s cubic-bezier(0.68, -0.55, 0.27, 1.55)"
+            : "none",
+        }}
+      >
+        <mask id="path-1-inside-1_15_221" fill="white">
+          <path d="M24.6686 5.40575C27.3886 7.14555 28.6111 10.3423 27.9714 13.3238C29.9177 12.8289 32.0559 13.108 33.8812 14.2754C37.3818 16.5145 38.4045 21.1679 36.1654 24.6685C33.9262 28.1691 29.2729 29.1918 25.7723 26.9527C23.0521 25.2127 21.8291 22.015 22.4693 19.0332C20.523 19.5281 18.3855 19.2497 16.5603 18.0822C13.0598 15.8431 12.0366 11.1905 14.2756 7.68994C16.5147 4.18933 21.168 3.16662 24.6686 5.40575Z" />
+        </mask>
+        <mask id="path-3-inside-2_15_221" fill="white">
+          <path d="M15.7988 14.6185C18.5185 16.3583 19.7415 19.5545 19.1021 22.5358C21.0482 22.0411 23.1863 22.3208 25.0114 23.4882C28.512 25.7273 29.5347 30.3807 27.2956 33.8813C25.0564 37.3817 20.403 38.4046 16.9025 36.1655C14.1823 34.4255 12.9593 31.2278 13.5994 28.246C11.6533 28.7409 9.51561 28.4623 7.69046 27.295C4.18985 25.0559 3.16714 20.4025 5.40627 16.9019C7.6455 13.4016 12.2983 12.3795 15.7988 14.6185Z" />
+        </mask>
+
+        <path
+          className="petal-indigo"
+          d="M24.6686 5.40575C27.3886 7.14555 28.6111 10.3423 27.9714 13.3238C29.9177 12.8289 32.0559 13.108 33.8812 14.2754C37.3818 16.5145 38.4045 21.1679 36.1654 24.6685C33.9262 28.1691 29.2729 29.1918 25.7723 26.9527C23.0521 25.2127 21.8291 22.015 22.4693 19.0332C20.523 19.5281 18.3855 19.2497 16.5603 18.0822C13.0598 15.8431 12.0366 11.1905 14.2756 7.68994C16.5147 4.18933 21.168 3.16662 24.6686 5.40575Z"
+        />
+        <path
+          className="petal-dark"
+          d="M24.6686 5.40575L25.2075 4.56334L25.2075 4.56334L24.6686 5.40575ZM27.9714 13.3238L26.9936 13.114L26.6554 14.6903L28.2178 14.293L27.9714 13.3238ZM33.8812 14.2754L34.42 13.433L34.42 13.433L33.8812 14.2754ZM36.1654 24.6685L37.0078 25.2073L37.0078 25.2073L36.1654 24.6685ZM25.7723 26.9527L25.2334 27.7951L25.2335 27.7951L25.7723 26.9527ZM22.4693 19.0332L23.447 19.2432L23.7854 17.6668L22.2228 18.0641L22.4693 19.0332ZM16.5603 18.0822L16.0214 18.9246L16.0215 18.9246L16.5603 18.0822ZM14.2756 7.68994L13.4332 7.1511L13.4331 7.15113L14.2756 7.68994ZM24.6686 5.40575L24.1298 6.24816C26.4867 7.7557 27.5488 10.5268 26.9936 13.114L27.9714 13.3238L28.9491 13.5336C29.6735 10.1578 28.2905 6.53539 25.2075 4.56334L24.6686 5.40575ZM27.9714 13.3238L28.2178 14.293C29.9079 13.8632 31.7601 14.1058 33.3424 15.1178L33.8812 14.2754L34.42 13.433C32.3518 12.1101 29.9275 11.7946 27.7249 12.3547L27.9714 13.3238ZM33.8812 14.2754L33.3423 15.1178C36.3777 17.0594 37.2645 21.0943 35.323 24.1296L36.1654 24.6685L37.0078 25.2073C39.5445 21.2415 38.3859 15.9697 34.42 13.433L33.8812 14.2754ZM36.1654 24.6685L35.323 24.1296C33.3814 27.165 29.3465 28.0518 26.3111 26.1103L25.7723 26.9527L25.2335 27.7951C29.1993 30.3318 34.471 29.1731 37.0078 25.2073L36.1654 24.6685ZM25.7723 26.9527L26.3112 26.1103C23.954 24.6025 22.8915 21.8304 23.447 19.2432L22.4693 19.0332L21.4915 18.8233C20.7667 22.1995 22.1503 25.8228 25.2334 27.7951L25.7723 26.9527ZM22.4693 19.0332L22.2228 18.0641C20.5326 18.4938 18.6812 18.2517 17.0991 17.2398L16.5603 18.0822L16.0215 18.9246C18.0898 20.2476 20.5134 20.5624 22.7157 20.0024L22.4693 19.0332ZM16.5603 18.0822L17.0991 17.2398C14.0637 15.2982 13.1767 11.264 15.118 8.22875L14.2756 7.68994L13.4331 7.15113C10.8966 11.1171 12.0558 16.388 16.0214 18.9246L16.5603 18.0822ZM14.2756 7.68994L15.118 8.22878C17.0595 5.19342 21.0945 4.30662 24.1298 6.24816L24.6686 5.40575L25.2075 4.56334C21.2416 2.02662 15.9699 3.18524 13.4332 7.1511L14.2756 7.68994Z"
+          mask="url(#path-1-inside-1_15_221)"
+        />
+        <path
+          className="petal-dark"
+          d="M15.7988 14.6185C18.5185 16.3583 19.7415 19.5545 19.1021 22.5358C21.0482 22.0411 23.1863 22.3208 25.0114 23.4882C28.512 25.7273 29.5347 30.3807 27.2956 33.8813C25.0564 37.3817 20.403 38.4046 16.9025 36.1655C14.1823 34.4255 12.9593 31.2278 13.5994 28.246C11.6533 28.7409 9.51561 28.4623 7.69046 27.295C4.18985 25.0559 3.16714 20.4025 5.40627 16.9019C7.6455 13.4016 12.2983 12.3795 15.7988 14.6185Z"
+        />
+        <path
+          className="petal-dark"
+          d="M15.7988 14.6185L16.3377 13.7762L16.3377 13.7761L15.7988 14.6185ZM19.1021 22.5358L18.1243 22.3261L17.7863 23.9021L19.3485 23.505L19.1021 22.5358ZM25.0114 23.4882L25.5502 22.6458L25.5502 22.6458L25.0114 23.4882ZM27.2956 33.8813L28.1379 34.4201L28.138 34.4201L27.2956 33.8813ZM16.9025 36.1655L16.3636 37.0079L16.3636 37.0079L16.9025 36.1655ZM13.5994 28.246L14.5772 28.4559L14.9156 26.8796L13.353 27.2769L13.5994 28.246ZM7.69046 27.295L7.15163 28.1374L7.15165 28.1374L7.69046 27.295ZM5.40627 16.9019L4.5639 16.363L4.56386 16.3631L5.40627 16.9019ZM15.7988 14.6185L15.26 15.4609C17.6167 16.9685 18.6792 19.7393 18.1243 22.3261L19.1021 22.5358L20.0799 22.7455C20.8039 19.3698 19.4202 15.748 16.3377 13.7762L15.7988 14.6185ZM19.1021 22.5358L19.3485 23.505C21.0382 23.0755 22.8903 23.3185 24.4725 24.3306L25.0114 23.4882L25.5502 22.6458C23.4823 21.3231 21.0583 21.0067 18.8557 21.5666L19.1021 22.5358ZM25.0114 23.4882L24.4725 24.3306C27.5079 26.2722 28.3947 30.3071 26.4531 33.3424L27.2956 33.8813L28.138 34.4201C30.6747 30.4543 29.5161 25.1825 25.5502 22.6458L25.0114 23.4882ZM27.2956 33.8813L26.4532 33.3424C24.5116 36.3777 20.4766 37.2645 17.4413 35.3231L16.9025 36.1655L16.3636 37.0079C20.3295 39.5446 25.6012 38.3858 28.1379 34.4201L27.2956 33.8813ZM16.9025 36.1655L17.4413 35.3231C15.0842 33.8154 14.0217 31.0433 14.5772 28.4559L13.5994 28.246L12.6217 28.0361C11.8969 31.4123 13.2804 35.0357 16.3636 37.0079L16.9025 36.1655ZM13.5994 28.246L13.353 27.2769C11.6629 27.7066 9.81129 27.4644 8.22927 26.4526L7.69046 27.295L7.15165 28.1374C9.21992 29.4603 11.6436 29.7752 13.8459 29.2152L13.5994 28.246ZM7.69046 27.295L8.2293 26.4526C5.19394 24.511 4.30714 20.4761 6.24868 17.4408L5.40627 16.9019L4.56386 16.3631C2.02714 20.3289 3.18577 25.6007 7.15163 28.1374L7.69046 27.295ZM5.40627 16.9019L6.24865 17.4408C8.19022 14.4058 12.2247 13.5194 15.26 15.461L15.7988 14.6185L16.3377 13.7761C12.372 11.2396 7.10078 12.3975 4.5639 16.363L5.40627 16.9019Z"
+          mask="url(#path-3-inside-2_15_221)"
+        />
+        <circle
+          className="petal-indigo"
+          cx="19.4341"
+          cy="22.8981"
+          r="5.0161"
+          transform="rotate(32.6046 19.4341 22.8981)"
+        />
+        <circle
+          className="petal-dark"
+          cx="23.601"
+          cy="18.5086"
+          r="3.26208"
+          transform="rotate(32.6046 23.601 18.5086)"
+        />
+      </svg>
+      </span>
+    </button>
+  );
+}
+
+// --- FILE: src/components/common/HLine.css ---
+.hline {
+    width: calc(100% + (var(--offset) * 2));
+    margin-left: calc(var(--offset) * -1);
+    margin-top: var(--margin-y);
+    margin-bottom: var(--margin-y);
+    height: 1px;
+    background-color: var(--text-main);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+// --- FILE: src/components/common/HLine.jsx ---
+import './HLine.css';
+
+const HLine = ({ className, offset = "0px", marginY = "20px" }) => {
+    return (
+        <div className={`hline ${className || ''}`}
+            style={{
+                '--offset': offset,
+                '--margin-y': marginY
+            }}
+        >
+
+        </div>
+    );
+};
+
+export default HLine
+
+// --- FILE: src/components/common/MyName.css ---
+.svg-name path.color,
+.svg-name stop.color {
+    transition: fill 0.5s ease, stop-color 0.5s ease;
+}
+
+.svg-name {
+    width: 30rem;
+    height: auto;
+    display: block;
+    aspect-ratio: 494 / 188;
+    cursor: pointer;
+}
+
+.svg-name:hover path.color {
+    fill: var(--hover);
+}
+
+.svg-name:hover stop.color {
+    stop-color: var(--hover);
+}
+
+.svg-name:active path.color {
+    fill: var(--text-main);
+}
+
+.svg-name:active stop.color {
+    stop-color: var(--text-main);
+}
+
+/* ---------------------------------------------------------------------- */
+
+
+@media (max-width: 1280px) {
+    .svg-name {
+        max-width: 25rem;
+        transition: width 0.3s ease-in-out;
+    }
+}
+
+@media (max-width: 1024px) {
+    .svg-name {
+        max-width: 20rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .svg-name {
+        max-width: 20rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .svg-name {
+        max-width: 17rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .svg-name {
+        max-width: 12rem;
+    }
+}
+
+// --- FILE: src/components/common/MyName.jsx ---
+import './MyName.css';
+
+export default function MyName({ className }) {
+    return (
+        <svg viewBox="0 0 494 188" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M231.657 113.55V0H251.307V48L248.607 45.15C250.507 40.25 253.607 36.55 257.907 34.05C262.307 31.45 267.407 30.15 273.207 30.15C279.207 30.15 284.507 31.45 289.107 34.05C293.807 36.65 297.457 40.3 300.057 45C302.657 49.6 303.957 54.95 303.957 61.05V113.55H284.307V65.7C284.307 62.1 283.607 59 282.207 56.4C280.807 53.8 278.857 51.8 276.357 50.4C273.957 48.9 271.107 48.15 267.807 48.15C264.607 48.15 261.757 48.9 259.257 50.4C256.757 51.8 254.807 53.8 253.407 56.4C252.007 59 251.307 62.1 251.307 65.7V113.55H231.657Z" fill="var(--accent)" />
+<path d="M169.396 115.35C163.696 115.35 158.746 114.4 154.546 112.5C150.346 110.6 147.096 107.9 144.796 104.4C142.496 100.8 141.346 96.65 141.346 91.95C141.346 87.45 142.346 83.45 144.346 79.95C146.346 76.35 149.446 73.35 153.646 70.95C157.846 68.55 163.146 66.85 169.546 65.85L196.246 61.5V76.5L173.296 80.4C169.396 81.1 166.496 82.35 164.596 84.15C162.696 85.95 161.746 88.3 161.746 91.2C161.746 94 162.796 96.25 164.896 97.95C167.096 99.55 169.796 100.35 172.996 100.35C177.096 100.35 180.696 99.5 183.796 97.8C186.996 96 189.446 93.55 191.146 90.45C192.946 87.35 193.846 83.95 193.846 80.25V59.25C193.846 55.75 192.446 52.85 189.646 50.55C186.946 48.15 183.346 46.95 178.846 46.95C174.646 46.95 170.896 48.1 167.596 50.4C164.396 52.6 162.046 55.55 160.546 59.25L144.496 51.45C146.096 47.15 148.596 43.45 151.996 40.35C155.496 37.15 159.596 34.65 164.296 32.85C168.996 31.05 174.096 30.15 179.596 30.15C186.296 30.15 192.196 31.4 197.296 33.9C202.396 36.3 206.346 39.7 209.146 44.1C212.046 48.4 213.496 53.45 213.496 59.25V113.55H194.896V99.6L199.096 99.3C196.996 102.8 194.496 105.75 191.596 108.15C188.696 110.45 185.396 112.25 181.696 113.55C177.996 114.75 173.896 115.35 169.396 115.35Z" fill="var(--accent)"/>
+<path d="M91.793 115.35C83.393 115.35 76.043 113.45 69.743 109.65C63.443 105.85 58.543 100.7 55.043 94.2C51.543 87.7 49.793 80.5 49.793 72.6C49.793 64.4 51.543 57.15 55.043 50.85C58.643 44.45 63.493 39.4 69.593 35.7C75.793 32 82.693 30.15 90.293 30.15C96.693 30.15 102.293 31.2 107.093 33.3C111.993 35.4 116.143 38.3 119.543 42C122.943 45.7 125.543 49.95 127.343 54.75C129.143 59.45 130.043 64.55 130.043 70.05C130.043 71.45 129.943 72.9 129.743 74.4C129.643 75.9 129.393 77.2 128.993 78.3H65.993V63.3H117.893L108.593 70.35C109.493 65.75 109.243 61.65 107.843 58.05C106.543 54.45 104.343 51.6 101.243 49.5C98.243 47.4 94.593 46.35 90.293 46.35C86.193 46.35 82.543 47.4 79.343 49.5C76.143 51.5 73.693 54.5 71.993 58.5C70.393 62.4 69.793 67.15 70.193 72.75C69.793 77.75 70.443 82.2 72.143 86.1C73.943 89.9 76.543 92.85 79.943 94.95C83.443 97.05 87.443 98.1 91.943 98.1C96.443 98.1 100.243 97.15 103.343 95.25C106.543 93.35 109.043 90.8 110.843 87.6L126.743 95.4C125.143 99.3 122.643 102.75 119.243 105.75C115.843 108.75 111.793 111.1 107.093 112.8C102.493 114.5 97.393 115.35 91.793 115.35Z" fill="var(--accent)" />
+<path d="M15.3 113.55V0H34.95V113.55H15.3Z" fill="var(--accent)" />
+<path d="M450.866 187.35C442.866 187.35 435.566 185.5 428.966 181.8C422.466 178.1 417.266 173.05 413.366 166.65C409.566 160.25 407.666 152.95 407.666 144.75C407.666 136.55 409.566 129.25 413.366 122.85C417.266 116.45 422.466 111.4 428.966 107.7C435.466 104 442.766 102.15 450.866 102.15C458.866 102.15 466.116 104 472.616 107.7C479.116 111.4 484.266 116.45 488.066 122.85C491.966 129.15 493.916 136.45 493.916 144.75C493.916 152.95 491.966 160.25 488.066 166.65C484.166 173.05 478.966 178.1 472.466 181.8C465.966 185.5 458.766 187.35 450.866 187.35ZM450.866 169.35C455.266 169.35 459.116 168.3 462.416 166.2C465.816 164.1 468.466 161.2 470.366 157.5C472.366 153.7 473.366 149.45 473.366 144.75C473.366 139.95 472.366 135.75 470.366 132.15C468.466 128.45 465.816 125.55 462.416 123.45C459.116 121.25 455.266 120.15 450.866 120.15C446.366 120.15 442.416 121.25 439.016 123.45C435.616 125.55 432.916 128.45 430.916 132.15C429.016 135.75 428.066 139.95 428.066 144.75C428.066 149.45 429.016 153.7 430.916 157.5C432.916 161.2 435.616 164.1 439.016 166.2C442.416 168.3 446.366 169.35 450.866 169.35Z" fill="var(--text-main)" className="color"/>
+<path d="M322.05 185.55V72H341.7V120L339 117.15C340.9 112.25 344 108.55 348.3 106.05C352.7 103.45 357.8 102.15 363.6 102.15C369.6 102.15 374.9 103.45 379.5 106.05C384.2 108.65 387.85 112.3 390.45 117C393.05 121.6 394.35 126.95 394.35 133.05V185.55H374.7V137.7C374.7 134.1 374 131 372.6 128.4C371.2 125.8 369.25 123.8 366.75 122.4C364.35 120.9 361.5 120.15 358.2 120.15C355 120.15 352.15 120.9 349.65 122.4C347.15 123.8 345.2 125.8 343.8 128.4C342.4 131 341.7 134.1 341.7 137.7V185.55H322.05Z" fill="var(--text-main)" className="color"/>
+<path d="M284.257 185.55V72H303.907V185.55H284.257Z" fill="url(#paint0_linear_1_151)"/>
+<path d="M231.111 187.35C222.711 187.35 215.361 185.45 209.061 181.65C202.761 177.85 197.861 172.7 194.361 166.2C190.861 159.7 189.111 152.5 189.111 144.6C189.111 136.4 190.861 129.15 194.361 122.85C197.961 116.45 202.811 111.4 208.911 107.7C215.111 104 222.011 102.15 229.611 102.15C236.011 102.15 241.611 103.2 246.411 105.3C251.311 107.4 255.461 110.3 258.861 114C262.261 117.7 264.861 121.95 266.661 126.75C268.461 131.45 269.361 136.55 269.361 142.05C269.361 143.45 269.261 144.9 269.061 146.4C268.961 147.9 268.711 149.2 268.311 150.3H205.311V135.3H257.211L247.911 142.35C248.811 137.75 248.561 133.65 247.161 130.05C245.861 126.45 243.661 123.6 240.561 121.5C237.561 119.4 233.911 118.35 229.611 118.35C225.511 118.35 221.861 119.4 218.661 121.5C215.461 123.5 213.011 126.5 211.311 130.5C209.711 134.4 209.111 139.15 209.511 144.75C209.111 149.75 209.761 154.2 211.461 158.1C213.261 161.9 215.861 164.85 219.261 166.95C222.761 169.05 226.761 170.1 231.261 170.1C235.761 170.1 239.561 169.15 242.661 167.25C245.861 165.35 248.361 162.8 250.161 159.6L266.061 167.4C264.461 171.3 261.961 174.75 258.561 177.75C255.161 180.75 251.111 183.1 246.411 184.8C241.811 186.5 236.711 187.35 231.111 187.35Z" fill="var(--text-main)" className="color" />
+<path d="M134.46 187.35C126.46 187.35 119.16 185.5 112.56 181.8C106.06 178.1 100.86 173.05 96.9598 166.65C93.1598 160.25 91.2598 152.95 91.2598 144.75C91.2598 136.55 93.1598 129.25 96.9598 122.85C100.86 116.45 106.06 111.4 112.56 107.7C119.06 104 126.36 102.15 134.46 102.15C142.46 102.15 149.71 104 156.21 107.7C162.71 111.4 167.86 116.45 171.66 122.85C175.56 129.15 177.51 136.45 177.51 144.75C177.51 152.95 175.56 160.25 171.66 166.65C167.76 173.05 162.56 178.1 156.06 181.8C149.56 185.5 142.36 187.35 134.46 187.35ZM134.46 169.35C138.86 169.35 142.71 168.3 146.01 166.2C149.41 164.1 152.06 161.2 153.96 157.5C155.96 153.7 156.96 149.45 156.96 144.75C156.96 139.95 155.96 135.75 153.96 132.15C152.06 128.45 149.41 125.55 146.01 123.45C142.71 121.25 138.86 120.15 134.46 120.15C129.96 120.15 126.01 121.25 122.61 123.45C119.21 125.55 116.51 128.45 114.51 132.15C112.61 135.75 111.66 139.95 111.66 144.75C111.66 149.45 112.61 153.7 114.51 157.5C116.51 161.2 119.21 164.1 122.61 166.2C126.01 168.3 129.96 169.35 134.46 169.35Z" fill="var(--text-main)" className="color"/>
+<path d="M42.6 187.35C34.5 187.35 27.2 185.5 20.7 181.8C14.3 178 9.25 172.9 5.55 166.5C1.85 160 0 152.7 0 144.6C0 136.5 1.85 129.25 5.55 122.85C9.25 116.45 14.3 111.4 20.7 107.7C27.2 104 34.5 102.15 42.6 102.15C48.4 102.15 53.8 103.2 58.8 105.3C63.8 107.3 68.1 110.1 71.7 113.7C75.4 117.2 78.05 121.4 79.65 126.3L62.4 133.8C60.9 129.7 58.35 126.4 54.75 123.9C51.25 121.4 47.2 120.15 42.6 120.15C38.3 120.15 34.45 121.2 31.05 123.3C27.75 125.4 25.15 128.3 23.25 132C21.35 135.7 20.4 139.95 20.4 144.75C20.4 149.55 21.35 153.8 23.25 157.5C25.15 161.2 27.75 164.1 31.05 166.2C34.45 168.3 38.3 169.35 42.6 169.35C47.3 169.35 51.4 168.1 54.9 165.6C58.4 163.1 60.9 159.75 62.4 155.55L79.65 163.35C78.05 167.95 75.45 172.1 71.85 175.8C68.25 179.4 63.95 182.25 58.95 184.35C53.95 186.35 48.5 187.35 42.6 187.35Z" fill="var(--text-main)" className="color"/>
+<defs>
+<linearGradient id="paint0_linear_1_151" x1="294.15" y1="71.55" x2="294.15" y2="185.55" gradientUnits="userSpaceOnUse">
+<stop stopColor="var(--accent)" />
+<stop offset="0.336538" stopColor="var(--text-main)" className="color"/>
+<stop offset="0.663462" stopColor="var(--text-main)" className="color"/>
+</linearGradient>
+</defs>
+</svg>
+    )
+}
+
+// --- FILE: src/components/common/VLine.css ---
+.vline-container {
+    position: relative;
+    width: 1px;
+    align-self: stretch; /* fills the height of its flex parent */
+}
+
+.vline {
+    position: absolute;
+    left: 0;
+    border-left: var(--border-thin);
+}
+
+// --- FILE: src/components/common/VLine.jsx ---
+import './VLine.css';
+
+export default function VLine({ className, offset = "0px", marginX = "0px" }) {
+    return (
+        <div
+            className={`vline-container ${className || ''}`}
+            style={{ marginLeft: marginX, marginRight: marginX }}
+        >
+            <div className="vline" style={{ top: offset, bottom: offset }} />
+        </div>
+    );
+}
+
+// --- FILE: src/components/home/FloralHero.css ---
+.float-container {
+    position: absolute;
+    right: 12%;
+    top: 50%;
+    z-index: 9;
+
+    width: 90%;
+    max-width: 600px;
+    height: auto;
+
+    transform: translateY(-50%);
+
+    animation: float 6s ease-in-out infinite;
+    will-change: transform;
+    transition: width 0.3 ease-in-out;
+    margin: 0 auto;
+    pointer-events: auto;
+}
+
+.float-container:hover {
+    animation-play-state: paused;
+}
+
+.leah-bloom {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(-50%);
+    }
+    50% {
+        transform: translateY(calc(-50% - 20px));
+    }
+}
+
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 1280px) {
+    .float-container {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .float-container {
+        max-width: 400px;
+        top: 50%;
+    }
+}
+
+@media (max-width: 768px) { 
+    .float-container {
+        max-width: 300px;
+        top: 42%;
+        right: 15%;
+        z-index: 10;
+    }
+}
+
+@media (max-width: 640px) {
+    .float-container {
+        width: 75%;
+        max-width: 280px;
+        top: 40%;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        z-index: 10;
+    }
+}
+
+// --- FILE: src/components/home/FloralHero.jsx ---
+import './FloralHero.css'
+import LeahBloom from '../../assets/leah-bloom.png';
+
+const FloralHero = () => {
+    return (
+        <div className="float-container">
+                <img src={LeahBloom} className="leah-bloom" alt="Floral Collage" href="#"/>
+        </div>
+    );
+};
+
+export default FloralHero;
+
+// --- FILE: src/components/home/LiveWeather.jsx ---
+import React, { useState, useEffect } from 'react';
+
+const LiveWeather = () => {
+    const [temp, setTemp] = useState("--");
+    const API_KEY = import.meta.env.VITE_WEATHER_KEY;
+
+    useEffect(() => {
+        console.log("My API Key is:", import.meta.env.VITE_WEATHER_KEY);
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=Wolcott,CT,US&units=imperial&appid=${API_KEY}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.main) setTemp(Math.round(data.main.temp));
+            })
+            .catch(() => setTemp("??"));
+    }, [API_KEY]);
+
+    return (
+        <div className="status-content">
+            <p className="stat-value main-font text-sm" ><span className="font-bold text-3xl">{temp}<span className="degree-unit text-base">°F</span></span> Wolcott, CT, USA</p>
+        </div>
+    );
+};
+
+export default LiveWeather;
+
+// --- FILE: src/components/layout/Layout.css ---
+/* Layout.css */
+@media (max-width: 768px) {
+    .app-container {
+        display: block;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+}
+.main-content {
+    min-height: calc(100vh - 120px);
+}
+
+
+// --- FILE: src/components/layout/Layout.jsx ---
+// src/components/Layout.jsx
+import NavBar from "./NavBar";
+import SideBar from "./SideBar";
+import './Layout.css';
+
+export default function Layout({ children, sidebarContent }) {
+    return (
+        <div className="app-container">
+          <NavBar />
+        
+        <div className="main-content-wrapper">
+          {children}
+        </div>
+      
+        <SideBar>
+          {sidebarContent}
+        </SideBar>
+        </div>
+    );
+}
+
+// --- FILE: src/components/layout/NavBar.css ---
+.logo {
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 25px;
+    font-weight: 200;
+}
+
+.logo:hover {
+    color: var(--hover);
+    transition: var(--color-fade);
+    cursor: pointer;
+}
+
+.logo:active {
+    color: var(--text-main);
+    transition: var(--color-fade);
+}
+
+.nav-vline {
+    display: none;
+}
+
+.navbar-container {
+    background-color: var(--bg-color);
+    width: 125px;
+    min-width: 125px;
+    height: 100vh;
+    border-right: var(--border-thin);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 10px;
+    justify-content: space-between;
+}
+
+.navbar-container p {
+    text-align: center;
+    line-height: 1.4;
+    padding: 0 5px;
+}
+
+.nav-top-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.nav-links {
+    margin-top: 10px;
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+.nav-links a:hover {
+    color: var(--hover);
+    transition: var(--color-fade);
+    transform: scale(1.10);
+}
+
+.nav-links a:active {
+    color: var(--text-main);
+    transition: var(--color-fade);
+    transform: scale(0.98);
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 8px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-center;
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-main);
+}
+
+.nav-icon {
+    color: var(--accent);
+}
+
+.nav-icon:hover {
+    color: var(--hover);
+    transition: var(--color-fade);
+}
+
+.nav-icon:active {
+    color: var(--accent);
+    transition: var(--color-fade);
+}
+
+p {
+    text-align: center;
+}
+
+.back-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    transition: opacity 0.3s ease;
+}
+
+.back-arrow-icon {
+    font-size: 2rem;;
+}
+
+.back-text {
+    font-size: var(--text-base);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.back-button-container:hover .back-arrow-icon,
+.back-button-container:hover .back-text {
+    color: var(--hover);
+    transition: var(--color-fade);
+}
+
+.back-button-container:active .back-arrow-icon,
+.back-button-container:active .back-text {
+    color: var(--accent);
+    transition: var(--color-fade);
+}
+
+.frog-nav {
+    display: none;
+}
+
+
+
+/* ---------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    /* 1. Fixed typo to match your HTML class */
+    .navbar-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        min-height: 70px;
+        flex-direction: row; /* Horizontal layout */
+        justify-content: space-between;
+        align-items: center;
+        border-right: none;
+        border-bottom: var(--border-thin);
+        padding: 10px 20px;
+        z-index: 1000;
+        padding: 0 15px; /* Slight horizontal breathing room */
+        height: 70px;
+    }
+
+    /* 2. Change the inner groupings from vertical stacks to horizontal rows */
+    .nav-top-section {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bg-color);
+        /* gap: 0; */
+    }
+
+    .logo,
+    .nav-links {
+        flex: 1;
+        display: flex;
+    }
+
+    /* 3. Adjust the logo so it doesn't wrap aggressively */
+    .logo { 
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: start;
+        text-align: left;
+        font-size: 1rem;
+        white-space: nowrap;
+        margin-bottom: 0;
+        font-weight: 300;
+        width: auto;
+    }
+
+    .nav-vline {
+        display: block;
+        margin: 0 10px;
+    }
+
+    /* 4. Keep links side-by-side */
+    .nav-links { 
+        grid-column: 3;
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        justify-self: end;
+        flex-direction: row;
+        gap: 12px;
+        margin-top: 0;
+        width: auto;
+    }
+
+    .flower-toggle-wrapper {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+    }
+
+    /* 5. Hide the copyright text on mobile so it doesn't break the layout */
+    .navbar-container p {
+        display: none; 
+    }
+    
+    /* Optional: Hide social icons in the top bar if you plan to move them to the bottom sidebar/footer */
+
+    .navbar-container .nav-divider {
+        display: none !important;
+    }
+
+    .nav-spacer,
+    .back-text,
+    .back-arrow-icon {
+        display: none !important;
+    }
+
+    .nav-top-section > *:not(.logo):not(.flower-toggle-wrapper):not(.nav-links) {
+        display: none !important;
+    }
+
+    .nav-bottom-section {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 70px;
+
+        display: flex;
+        flex-direction: row-reverse; /* Horizontal layout */
+        justify-content: space-between;
+
+        overflow: visible;
+        align-items: center;
+        
+        background-color: var(--bg-color);
+        border-top: var(--border-thin);
+        
+        border-right: none;
+        padding: 0 15px; /* Slight horizontal breathing room */
+        z-index: 1000;
+        
+        
+    }
+
+    .nav-bottom-section p {
+        display: block;
+        margin: 0 !important;
+        line-height: 1.2;
+        font-size: 10px;
+        text-align: left;
+    }
+
+    .frog-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+
+    .frog-nav img {
+        display: block;
+        height: 85px;
+        width: auto;
+
+        margin-bottom: 40px !important;
+    }
+
+    .social-icons {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 0 !important;
+    }
+}
+
+// --- FILE: src/components/layout/NavBar.jsx ---
+import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import './NavBar.css';
+import FlowerToggle from "../common/FlowerToggle"
+import HLine from '../common/HLine';
+import VLine from '../common/VLine';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import {faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
+
+import '../../pages/home/HomeSidebar.css';
+import Frog from '../../assets/frog.svg';
+
+export default function NavBar() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const isHomePage = location.pathname === "/";
+
+    const handleBack = () => {
+        navigate(-1);
+    };
+
+    const backLabel = "back";
+
+    return (
+        <>
+            <div className="navbar-container" >
+                <div className="nav-top-section">
+                    <Link to="/" className="logo main-font text-2xl">Leah Made This</Link>
+
+                    <VLine className="nav-vline" />
+                    <div className="flower-toggle-wrapper">
+                        <FlowerToggle />
+                    </div>
+                    <div className="nav-links flex-column flex-center">
+                        <Link to="/work" className="secondary-font">work</Link>
+                        <Link to="/play" className="secondary-font" >play</Link>
+                        <Link to="/about" className="secondary-font" >about</Link>
+                    </div>
+                    <HLine className="nav-divider" offset="20px" marginY="20px" />
+                </div>
+
+                {!isHomePage && (
+                <div className="back-button-container" onClick={handleBack} style={{ cursor: 'pointer' }}>
+                    <FontAwesomeIcon icon={faArrowLeft} className="back-arrow-icon accent-color" />
+                    <p className="back-text secondary-font accent-color">{backLabel}</p>
+                </div>
+                )}
+
+                <div className="nav-spacer" style={{ flexGrow: 1 }}></div>
+            
+                <HLine className="nav-divider" offset="20px" marginY="20px" />
+
+                <div className="nav-bottom-section">
+                    <div className="social-icons">
+                        <a href="mailto:leahmadethis4@gmail.com" target="_blank" rel="noreferrer">
+                            <FontAwesomeIcon icon={faEnvelope} size="xl" className="nav-icon" />
+                        </a>
+                        <a href="https://www.linkedin.com/in/leahcoelho/" target="_blank" rel="noreferrer">
+                            <FontAwesomeIcon icon={faLinkedin} size="xl" className="nav-icon" />
+                        </a>
+                        <a href="https://github.com/lcoelho142/" target="_blank" rel="noreferrer">
+                            <FontAwesomeIcon icon={faGithub} size="xl" className="nav-icon" />
+                        </a>
+                    </div>
+                    <div>
+                        <a className="frog-nav" href="https://weather-app-mauve-three-68.vercel.app/" target="_blank" rel="noreferrer" ><img src={Frog} alt="Frog Logo" /></a>
+
+                    </div>
+                    <p className="main-font text-xs font-light">© 2026<br/>Leah Made This.<br/>All Rights Reserved</p>
+                </div>
+            </div>
+
+            
+        </>
+        
+);
+}
+
+
+// --- FILE: src/components/layout/SideBar.css ---
+.side-nav-container {
+    padding: 40px 20px;
+    height: 100vh;
+    width: 125px;
+    min-width: 125px;
+    background-color: var(--bg-color);
+    border-left: var(--border-thin);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.side-nav-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+    align-items: center;
+    text-align: center;
+}
+
+
+// --- FILE: src/components/layout/SideBar.jsx ---
+import React, { useState } from 'react';
+import './SideBar.css'
+
+export default function SideBar({ children }) {
+
+    return (
+        <aside className="side-nav-container">
+        <div className="side-nav-right">
+            {children}
+        </div>
+        </aside>
+    )
+}
+
+// --- FILE: src/index.css ---
+@import "tailwindcss";
+
+/* Light Mode (Default) */
+:root {
+  --bg-color: #fbf5eb;
+  --accent: #6E79B7;
+  --text-main: #1C1C1C;
+  --hover: #eb6d32;
+  --font-jakarta: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-jetbrains: 'JetBrains Mono Variable', monospace;
+  --standard-radius: 12px;
+  --border-thin: 1px solid #1C1C1C;
+  --border-thick: 2px solid #1C1C1C;
+  /* Base size: Usually 16px */
+  --text-base: 1rem; 
+  --base-padding: 50px;
+  --color-fade: 0.3s ease-in-out;
+  min-height: 100vh;
+}
+
+/* Sizing Utilities */
+.text-xs   { font-size: 0.75rem;   line-height: 1rem; }    /* 12px */
+.text-sm   { font-size: 0.875rem;  line-height: 1.25rem; } /* 14px */
+.text-base { font-size: 1rem;      line-height: 1.5rem; }  /* 16px */
+.text-lg   { font-size: 1.125rem;  line-height: 1.75rem; } /* 18px */
+.text-xl   { font-size: 1.25rem;   line-height: 1.75rem; } /* 20px */
+.text-2xl  { font-size: 1.5rem;    line-height: 2rem; }    /* 24px */
+.text-3xl  { font-size: 1.875rem;  line-height: 2.25rem; } /* 30px */
+.text-4xl  { font-size: 2.25rem;   line-height: 2.5rem; }  /* 36px */
+.text-5xl  { font-size: 3rem;      line-height: 1; }       /* 48px */
+
+/* Weight Utilities (The perfect companions) */
+.font-light  { font-weight: 300; }
+.font-normal { font-weight: 400; }
+.font-medium { font-weight: 500; }
+.font-bold   { font-weight: 700; }
+
+.font-light-italic { font-weight: 300; font-style: italic; }
+.font-normal-italic { font-weight: 400; font-style: italic; }
+.font-medium-italic { font-weight: 500; font-style: italic; }
+.font-bold-italic   { font-weight: 700; font-style: italic; }
+
+
+.fluid-text { font-size: clamp(1.5rem, 5vw, 3rem); }
+.fluid-padding { padding: clamp(1rem, 2vw, 2rem); }
+
+
+body {
+    font-size: var(--text-base);
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+.hline { 
+  width: 100%;
+  height: 1px;
+  background: var(--text-main)
+}
+
+/* Layout Groups */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stack-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.main-font {
+  font-family: var(--font-jakarta);
+  color: var(--text-main);
+}
+
+.secondary-font {
+  font-family: var(--font-jetbrains);
+  color: var(--text-main);
+}
+
+.accent-color {
+  color: var(--accent);
+}
+
+/* Decoration Groups */
+.card-shadow {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+
+
+
+@media (max-width: 1024px) {
+  :root {
+    --base-padding: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --base-padding: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --text-base: 0.875rem; /* Everything on mobile shrinks by 12.5% automatically */
+    --base-padding: 20px;
+  }
+
+  body {
+    font-size: var(--text-base);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --text-base: 0.875rem; /* Everything on mobile shrinks by 12.5% automatically */
+    --base-padding: 20px;
+  }
+
+  body {
+    font-size: var(--text-base);
+  }
+}
+
+
+
+/* Dark Mode (Activate by class on body or html) */
+[data-theme='dark'] {
+  --bg-color: #1C1C1C;
+  --text-main: #fbf5eb;
+  --accent: #A5B1FC;
+  --hover: #fbca39;
+  --border-thin: 1px solid #fbf5eb;
+  --border-thick: 2px solid #fbf5eb;
+}
+
+// --- FILE: src/main.jsx ---
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource-variable/plus-jakarta-sans';
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+
+// --- FILE: src/pages/about/AboutPage.css ---
+
+
+// --- FILE: src/pages/about/AboutPage.jsx ---
+import Layout from "../../components/layout/Layout";
+import './AboutPage.css';
+// import AboutSidebar from "../components/about/AboutSidebar";
+
+export default function AboutPage() {
+    return (
+        <Layout>
+            <main className="main-section">
+                <h1 className="secondary-font">About Portfolio Coming Soon</h1>
+            </main>
+        </Layout>
+    );
+}
+
+// --- FILE: src/pages/home/HomePage.css ---
+.main-section {
+    position: relative;
+    flex-grow: 1;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-color);
+}
+
+.float-container {
+    z-index: 999;
+}
+
+.top-group, .bottom-group {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.top-group *, .bottom-group * {
+    pointer-events: auto;
+}
+
+
+
+.top-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: var(--base-padding);
+    margin-bottom: 2.5em;
+}
+
+.svg-name {
+    width: 30rem;
+    height: auto;
+    display: block;
+}
+
+.top-group > a {
+    flex-shrink: 0;
+    display: flex;
+}
+
+.bottom-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--base-padding);
+    gap: 1rem;
+    max-width: 32em;
+    position: relative;
+    z-index: 1;
+    margin-top: -10px;
+}
+
+.bottom-group p {
+    text-align: left;
+}
+
+.top-group * {
+    z-index: 10;
+}
+
+.top-group p {
+    font-size: 1.25rem;
+    max-width: 7.5em;
+    line-height: 1.4;
+    text-align: right;
+}
+
+.top-group p, .bottom-group h2 {
+    text-wrap: balance;
+}
+
+.work-btn {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background-color: var(--background-color);
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    color: var(--accent);
+}
+
+
+.work-btn:hover {
+    color: var(--hover);
+    font-style: italic;
+}
+
+.work-btn:active {
+    color: var(--accent);
+    transition: var(--color-fade);
+}
+
+.work-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background-color: var(--hover);
+    transition: width 0.4s ease-in-out;
+}
+
+.work-btn:hover::after {
+    width: 100%;
+}
+
+
+/* ---------------------------------------------------------------------- */
+
+
+@media (max-width: 1280px) {
+    .top-group p {
+        font-size: 1rem;
+    }
+    .top-group {
+        margin-bottom: 1em;
+    }
+    .bottom-group h2 {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-group p {
+        font-size: .875rem;
+        line-height: 1.3;
+    }
+}
+
+@media (max-width: 420px) {
+    .top-group p {
+        font-size: .7rem;
+    }
+}
+
+// --- FILE: src/pages/home/HomePage.jsx ---
+// src/components/Pages/HomePage.jsx
+import Layout from "../../components/layout/Layout";
+import './HomePage.css';
+import HomeSidebar from "./HomeSidebar";
+
+import { Link } from "react-router-dom";
+
+import MyName from '../../components/common/MyName';
+import HLine from '../../components/common/HLine'
+import FloralHero from '../../components/home/FloralHero';
+
+export default function HomePage() {
+    return (
+        <Layout sidebarContent={<HomeSidebar />}>
+            <main className="main-section">
+                <div className="top-group">
+                    <Link to="/about"><MyName className="svg-name" /></Link>
+                    <p className="main-font text-xl">Helping clients <span className="font-bold-italic" >build trust</span> with their customers by creating an experience that <span className="font-bold-italic" >feels tailored</span> to them.</p>
+                </div>
+
+                <HLine offset="0px" marginY="0px" />
+
+                <div className="bottom-group">
+                    <h2 className="secondary-font text-3xl font-light">A <span className="font-bold-italic" >Front-end</span> Web <span className="font-bold-italic" >Designer</span> & <span className="font-bold-italic" >Developer</span></h2>
+                    <p className="main-font text-lg">Providing brand overhauls, website design & development -all packaged into one service. Transforming ideas, observations and understandings into designs that value a company's future vision.</p>
+                    <Link to="/work" className="work-btn animated-underline main-font font-bold accent-color text-xl">
+                        see work
+                    </Link>
+                    
+                </div>
+
+                <Link to="/play"><FloralHero /></Link>
+            </main>
+        </Layout>
+    );
+}
+
+
+
+
+// --- FILE: src/pages/home/HomeSidebar.css ---
+.frog-wrapper {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.2rem;
+}
+
+/* Theme Toggles (Keep these as they were) */
+.dark-only { display: none !important; }
+[data-theme='dark'] .dark-only { display: block !important; }
+[data-theme='dark'] .light-only { display: none !important; }
+
+.status-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* This creates a consistent "buffer" zone */
+}
+
+.status-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0px;
+}
+
+.mini-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    /* Standard smooth transition for everything */
+    transition: all var(--color-fade);
+    pointer-events: none;
+}
+
+.sun-frog {
+    opacity: 0;
+    z-index: 2;
+}
+
+.sun-frog.visible {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1); /* Matches base scale */
+}
+
+.sun-frog.visible {
+    opacity: 1;
+}
+
+.base-frog {
+    opacity: 1;
+    z-index: 1;
+}
+
+.status-link:hover .base-frog {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.1); /* Subtle scale up */
+}
+
+.status-link:hover .mini-icon {
+    transform: translate(-50%, -55%) scale(1.15); /* -55% nudges it up slightly more on hover */
+}
+
+.status-link:hover .stat-value {
+    color: var(--hover);
+    transition: var(--color-fade);
+}
+
+.status-link:active .stat-value {
+    color: var(--accent);
+    transition: var(--color-fade);
+}
+
+.stat-value {
+    color: var(--accent);
+    margin-top: 10px; 
+}
+
+.degree-unit {
+    vertical-align: top;
+    display: inline-block;
+    margin-top: 2px;
+    margin-left: 2px;
+}
+
+
+// --- FILE: src/pages/home/HomeSidebar.jsx ---
+import React, { useState } from 'react';
+import './HomeSidebar.css';
+import LiveWeather from '../../components/home/LiveWeather';
+import Frog from '../../assets/frog.svg'
+import SunFrog from '../../assets/sun-frog.svg'
+import OrangeSunFrog from '../../assets/sun-frog-orange.svg'
+
+export default function HomeSidebar() {
+    const [isHovered, setIsHovered] = useState(false);
+
+    return (
+        <div className="home-sidebar-content">
+                <a href="https://weather-app-mauve-three-68.vercel.app/" target="_blank" rel="noreferrer" className="status-link"
+                    onMouseEnter={() => setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
+                    <div className="frog-wrapper">
+                        <img src={Frog} alt="Weather App" className="mini-icon base-frog" />
+
+                        <img src={OrangeSunFrog} alt="Sunny Weather App" 
+                            className={`mini-icon sun-frog light-only ${isHovered ? 'visible' : ''}`} 
+                        />
+                        <img src={SunFrog} alt="Sunny Weather App" className={`mini-icon sun-frog dark-only ${isHovered ? 'visible' : ''}`} />
+                    </div>
+                    <LiveWeather />
+                </a>
+        </div>
+    );
+}
+
+// --- FILE: src/pages/play/PlayPage.css ---
+
+
+// --- FILE: src/pages/play/PlayPage.jsx ---
+import Layout from "../../components/layout/Layout";
+import './PlayPage.css'
+// import PlaySidebar from "../components/play/PlaySidebar";
+
+export default function PlayPage() {
+    return (
+        <Layout>
+            <main className="main-section">
+                <h1 className="secondary-font">Play Portfolio Coming Soon</h1>
+            </main>
+        </Layout>
+    );
+}
+
+// --- FILE: src/pages/work/WorkPage.css ---
+html, body {
+    scroll-behavior: smooth;
+}
+
+.main-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    padding: 0 var(--base-padding);
+    scroll-behavior: smooth;
+}
+
+.work {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background-color: var(--bg-color);
+    
+    width: 100%;
+    margin: 0;
+    padding: 2rem 0;
+    text-align: center;
+
+    box-shadow: 0 -30px 20px 50px var(--bg-color);
+    padding-bottom: 2rem;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+    margin-bottom: 150px;
+    position: relative;
+    margin-top: 25px;
+}
+
+.card-container::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    background-color: var(--text-main);
+    width: 1px;
+    height: 75%;
+    top: 15%;
+}
+
+.top-scroll {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-scroll {
+    display: flex;
+    justify-content: center;
+    border: 1px solid var(--text-main);
+    border-radius: 50px;
+    padding: 1rem;
+    background-color: var(--bg-color);
+    width: 25%;
+    z-index: 100;
+    margin-top: -50px;
+}
+
+.btn-scroll:hover {
+    background-color: var(--text-main);
+    color: var(--bg-color);
+    cursor: pointer;
+    transition: var(--color-fade);
+}
+
+.btn-scroll:active {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+}
+
+@media (max-width: 1024px) {
+    .card-container::before {
+        display: none;
+    }
+}
+
+// --- FILE: src/pages/work/WorkPage.jsx ---
+import { useRef } from 'react';
+import Layout from "../../components/layout/Layout.jsx";
+import './WorkPage.css';
+import WorkProj from './WorkProj.jsx';
+import WorkSidebar from './WorkSidebar.jsx'
+import HLine from '../../components/common/HLine.jsx';
+
+export default function WorkPage() {
+
+    const mainRef = useRef(null);
+
+    const scrollToTop = () => {
+        if (mainRef.current) {
+            mainRef.current.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        }
+    };
+
+    return (
+        <Layout sidebarContent={<WorkSidebar />}>
+            <main className="main-section" ref={mainRef}>
+                <h1 className="work secondary-font font-extrabold text-3xl">work</h1>  
+                <div className="card-container">
+                    <WorkProj></WorkProj>
+                    <div className="top-scroll">
+                        <HLine />
+                        <button
+                            onClick={scrollToTop}
+                            className="btn-scroll secondary-font"
+                        >
+                            TOP
+                        </button>
+                    </div>
+                </div>
+            </main>
+        </Layout>
+    );
+}
+
+
+// --- FILE: src/pages/work/WorkProj.css ---
+.proj-card {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    position: relative;
+    z-index: 25;
+    column-gap: 40px;
+    align-items: center;
+}
+
+.number-id {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* Creates stroke around numbers */
+    -webkit-text-stroke: 2px var(--text-main);
+    paint-order: stroke fill;
+}
+
+.number-id:hover {
+    color: var(--hover);
+    transition: var(--color-fade);
+    cursor: pointer;
+}
+
+.number-id:active {
+    color: var(--accent);
+    transition: var(--color-fade);
+}
+
+.work-section-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    width: 100%;
+}
+
+.text-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.text-group h2,
+.text-group p {
+    margin: 0;
+}
+
+.proj-img {
+    border: 1px solid var(--text-main);
+    box-sizing: border-box;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+}
+
+.proj-img-container:hover .proj-img {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    background-color: var(--background-color);
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    color: var(--accent);
+}
+
+.btn:hover {
+    color: var(--hover);
+    font-style: italic;
+}
+
+.btn:active {
+    color: var(--accent);
+    transition: var(--color-fade);
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background-color: var(--hover);
+    transition: width 0.4s ease-in-out;
+}
+
+.btn:hover::after {
+    width: 100%;
+}
+
+
+@media (max-width: 1024px) {
+    .proj-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .proj-card > a:first-of-type {
+        align-self: flex-end;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .number-id {
+        text-align: right;
+    }
+
+    .text-group {
+        align-self: flex-start;
+    }
+}
+
+// --- FILE: src/pages/work/WorkProj.jsx ---
+import { Link } from 'react-router-dom';
+import './WorkProj.css';
+
+function WorkProjCard({ number, category, title, dateRange, imageSrc, imageAlt, projectLink }) {
+    return (
+        <div className="proj-card">
+            <Link to={projectLink} >
+                <h1 className="number-id secondary-font text-9xl font-bold accent-color">
+                    {number}
+                </h1>
+            </Link>
+
+                <Link to={projectLink} className="proj-img-container">
+                    <div style={{
+                        width: '100%',
+                        aspectRatio: '16 / 9',
+                        overflow: 'hidden'
+                    }}>
+                        <img 
+                            src={imageSrc}
+                            alt={imageAlt || `${title} project preview`}
+                            className="proj-img"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover',  zIndex: '1' }}
+                        />
+                    </div>
+                </Link>
+
+                <div className="text-group">
+                    <h2 className="secondary-font">
+                        <span className="italic font-extrabold">{category}:</span> {title}
+                    </h2>
+                    <p className="main-font">{dateRange}</p>
+                    <Link to={projectLink} className="btn main-font font-bold accent-color">view project</Link>
+                </div>
+            </div>
+    );
+}
+
+// -- DATA --
+
+const projectData = [
+        {
+            id: "01", 
+            category: "Web Design", 
+            title: "Social Spark", 
+            dates: "01.26.26 — 02.08.26",
+            imagePath: "/socialspark-thumbnail.png",
+            altText: "Homepage design for Social Spark",
+            projectLink: "./social-spark"
+        },
+        {
+            id: "02", 
+            category: "Web App", 
+            title: "Weather API", 
+            dates: "12.13.2025 — 01.13.26",
+            imagePath: "/weatherapp-thumbnail.png",
+            altText: "Weather App design/development using Geolocation & Weather APIs",
+            projectLink: "./weather-api"
+        },
+        {
+            id: "03", 
+            category: "Web Dev", 
+            title: "Portfolio Site", 
+            dates: "02.09.26 — PRESENT",
+            imagePath: "/portfolio-thumbnail.png",
+            altText: "Website Portfolio web design & development",
+            projectLink: "./portfolio"
+        },
+    ];
+
+
+// -- THE MAIN EXPORT --
+
+export default function WorkProj() {
+        return (
+            <div className="work-section-container">
+                {projectData.map((proj) => (
+                    <WorkProjCard 
+                        key={proj.id}
+                        number={proj.id} 
+                        category={proj.category} 
+                        title={proj.title} 
+                        dateRange={proj.dates}
+                        imageSrc={proj.imagePath}
+                        imageAlt={proj.altText}
+                        projectLink={proj.projectLink}
+                    />
+                ))}
+            </div>
+        )}
+
+// --- FILE: src/pages/work/WorkSidebar.css ---
+.sidebar-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+// --- FILE: src/pages/work/WorkSidebar.jsx ---
+import './WorkSidebar.css';
+
+export default function WorkSidebar() {
+
+    return (
+        <div className="work-sidebar-content">
+            <div className="sidebar-text">
+                <h1 className="secondary-font">CONTENTS</h1>
+                <a>1. Proj.</a>
+                <a>2. Proj.</a>
+                <a>3. Proj.</a>
+            </div>
+        </div>
+    );
+}
+
+// --- FILE: src/pages/work/portfolio/Portfolio.css ---
+
+
+// --- FILE: src/pages/work/portfolio/Portfolio.jsx ---
+import './Portfolio.css';
+import Layout from '../../../components/layout/Layout'
+import PortfolioSidebar from './PortfolioSidebar';
+
+export default function Portfolio() {
+    return (
+        <Layout sidebarContent={<PortfolioSidebar />}>
+            <div className="project-content">
+                <h1>Portfolio Project</h1>
+                <p>Project details go here...</p>
+            </div>
+        </Layout>
+    )
+}
+
+// --- FILE: src/pages/work/portfolio/PortfolioSidebar.css ---
+
+
+// --- FILE: src/pages/work/portfolio/PortfolioSidebar.jsx ---
+import './PortfolioSidebar.css';
+
+export default function PortfolioSidebar() {
+    return (
+        <div className="portfolio-sidebar-content">
+            <div className="portfolio-sidebar-text">
+                <h1 className="secondary-font">CONTENTS</h1>
+                <a>Portfolio</a>
+                <a>Portfolio</a>
+                <a>Portfolio</a>
+            </div>
+        </div>
+    )
+}
+
+// --- FILE: src/pages/work/social-spark/SocialSpark.css ---
+
+
+// --- FILE: src/pages/work/social-spark/SocialSpark.jsx ---
+import './SocialSpark.css';
+import Layout from '../../../components/layout/Layout';
+import SocialSparkSidebar from './SocialSparkSidebar';
+
+export default function SocialSpark() {
+    return (
+        <Layout sidebarContent={<SocialSparkSidebar />}>
+            <div className="project-content">
+                <h1>Social Spark Project</h1>
+                <p>Project details go here...</p>
+            </div>
+        </Layout>
+    )
+}
+
+// --- FILE: src/pages/work/social-spark/SocialSparkSidebar.css ---
+
+
+// --- FILE: src/pages/work/social-spark/SocialSparkSidebar.jsx ---
+import './SocialSparkSidebar.css';
+
+export default function SocialSparkSidebar() {
+
+    return (
+        <div className="socialspark-sidebar-content">
+            <div className="socialspark-sidebar-text">
+                <h1 className="secondary-font">CONTENTS</h1>
+                <a>SocialSpark</a>
+                <a>SocialSpark</a>
+                <a>SocialSpark</a>
+            </div>
+        </div>
+    );
+}
+
+// --- FILE: src/pages/work/weather-api/WeatherApi.css ---
+
+
+// --- FILE: src/pages/work/weather-api/WeatherApi.jsx ---
+import './WeatherApi.css';
+import Layout from '../../../components/layout/Layout'
+import WeatherApiSidebar from './WeatherApiSidebar';
+
+export default function WeatherApi() {
+    return (
+        <Layout sidebarContent={<WeatherApiSidebar />}>
+            <div className="project-content">
+                <h1>Weather API Project</h1>
+                <p>Project details go here...</p>
+            </div>
+        </Layout>
+    )
+}
+
+// --- FILE: src/pages/work/weather-api/WeatherApiSidebar.css ---
+
+
+// --- FILE: src/pages/work/weather-api/WeatherApiSidebar.jsx ---
+import './WeatherApiSidebar.css';
+
+export default function WeatherApiSidebar() {
+    
+    return (
+        <div className="weather-sidebar-content">
+            <div className="weather-sidebar-text">
+                <h1 className="secondary-font">CONTENTS</h1>
+                <a>Weather</a>
+                <a>Weather</a>
+                <a>Weather</a>
+            </div>
+        </div>
+    )
+}

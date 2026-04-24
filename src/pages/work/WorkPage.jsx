@@ -6,21 +6,19 @@ import WorkSidebar from './WorkSidebar.jsx'
 import HLine from '../../components/common/HLine.jsx';
 
 export default function WorkPage() {
-
     const mainRef = useRef(null);
 
     const scrollToTop = () => {
-        if (mainRef.current) {
-            mainRef.current.scrollTo({
-                top: 0,
-                behavior: 'smooth',
-            });
+        if (window.innerWidth <= 768) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (mainRef.current) {
+            mainRef.current.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
     return (
-        <Layout sidebarContent={<WorkSidebar />}>
-            <main className="main-section" ref={mainRef}>
+        <Layout sidebarContent={<WorkSidebar />} mainRef={mainRef}>
+            <main className="work-main-section">
                 <h1 className="work secondary-font font-extrabold text-3xl">work</h1>  
                 <div className="card-container">
                     <WorkProj></WorkProj>
