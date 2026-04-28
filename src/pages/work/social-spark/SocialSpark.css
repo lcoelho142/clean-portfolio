@@ -4,5 +4,48 @@
     align-items: center;
     background-color: var(--bg-color);
     height: 100vh;
+}
 
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.site-btn {
+    border: 1px solid var(--text-main);
+    background-color: var(--accent);
+    color: var(--bg-color);
+    padding: 10px 20px;
+    border-radius: 50px;
+    width: 35%;
+    text-align: center;
+    margin-top: -25px;
+}
+
+.context-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    padding: var(--base-padding);
+    gap: 30px;
+}
+
+.context-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.context-text > p {
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .context-section {
+        display: flex;
+        flex-direction: column;
+}
 }
