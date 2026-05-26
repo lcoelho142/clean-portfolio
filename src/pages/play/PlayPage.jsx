@@ -6,7 +6,7 @@ export default function PlayPage() {
     return (
         <Layout>
             <main className="main-section">
-                <h1 className="secondary-font">Play Portfolio Coming Soon</h1>
+                <h1 className="secondary-font">Play Section Coming Soon!</h1>
             </main>
         </Layout>
     );
