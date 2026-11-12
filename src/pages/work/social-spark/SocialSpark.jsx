@@ -1,7 +1,7 @@
 import './SocialSpark.css';
 import Layout from '../../../components/layout/Layout';
 import SocialSparkSidebar from './SocialSparkSidebar';
-import HeroImg from '../../../../public/socialspark-thumbnail.png';
+import { projects } from '../projects.js';
 import ContextImg from './assets/SocialSparkContext.png';
 
 export default function SocialSpark() {
@@ -9,7 +9,7 @@ export default function SocialSpark() {
         <Layout sidebarContent={<SocialSparkSidebar />}>
             <div className="main-font project-content">
                 <section className="hero-section">
-                    <img src={HeroImg} />
+                    <img src={projects.socialSpark.imagePath} alt="Social Spark project preview" />
                     <a className="site-btn secondary-font font-semibold" href="https://test-website-azure-three.vercel.app/" target="_blank">Visit Live Site</a>
                 </section>
                 <section className="context-section">

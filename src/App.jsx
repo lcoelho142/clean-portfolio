@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
 import { ThemeProvider } from './ThemeContext.jsx'
+import { projects } from './pages/work/projects.js'
 
 // Import page components from Pages Folder
 import HomePage from './pages/home/HomePage.jsx'
@@ -18,13 +19,12 @@ export default function App() {
       <ThemeProvider>
         <BrowserRouter>
           <Routes>
-            // Default HomePage
             <Route path="/" element={<HomePage />} />
             <Route path="/work" element={<WorkPage />} />
 
-            <Route path="/work/social-spark" element={<SocialSpark />} />
-            <Route path="/work/weather-api" element={<WeatherApi />} />
-            <Route path="/work/portfolio" element={<Portfolio />} />
+            <Route path={projects.socialSpark.path} element={<SocialSpark />} />
+            <Route path={projects.weatherApi.path} element={<WeatherApi />} />
+            <Route path={projects.portfolio.path} element={<Portfolio />} />
 
             <Route path="/play" element={<PlayPage />} />
             <Route path="/about" element={<AboutPage />} />

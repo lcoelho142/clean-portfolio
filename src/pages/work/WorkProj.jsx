@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import './WorkProj.css';
+import { workProjects } from './projects.js';
 
 function WorkProjCard({ number, category, title, dateRange, imageSrc, imageAlt, projectLink }) {
     return (
@@ -36,45 +37,10 @@ function WorkProjCard({ number, category, title, dateRange, imageSrc, imageAlt, 
     );
 }
 
-// -- DATA --
-
-const projectData = [
-        {
-            id: "01", 
-            category: "Web Design", 
-            title: "Social Spark", 
-            dates: "01.26.26 — 02.08.26",
-            imagePath: "/socialspark-thumbnail.png",
-            altText: "Homepage design for Social Spark",
-            projectLink: "./social-spark"
-        },
-        {
-            id: "02", 
-            category: "Web App", 
-            title: "Weather API", 
-            dates: "12.13.2025 — 01.13.26",
-            imagePath: "/weatherapp-thumbnail.png",
-            altText: "Weather App design/development using Geolocation & Weather APIs",
-            projectLink: "./weather-api"
-        },
-        {
-            id: "03", 
-            category: "Web Dev", 
-            title: "Portfolio Site", 
-            dates: "02.09.26 — PRESENT",
-            imagePath: "/portfolio-thumbnail.png",
-            altText: "Website Portfolio web design & development",
-            projectLink: "./portfolio"
-        },
-    ];
-
-
-// -- THE MAIN EXPORT --
-
 export default function WorkProj() {
         return (
             <div className="work-section-container">
-                {projectData.map((proj) => (
+                {workProjects.map((proj) => (
                     <WorkProjCard 
                         key={proj.id}
                         number={proj.id} 
@@ -83,7 +49,7 @@ export default function WorkProj() {
                         dateRange={proj.dates}
                         imageSrc={proj.imagePath}
                         imageAlt={proj.altText}
-                        projectLink={proj.projectLink}
+                        projectLink={proj.path}
                     />
                 ))}
             </div>

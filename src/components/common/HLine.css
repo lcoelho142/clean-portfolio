@@ -1,5 +1,5 @@
 .hline {
-    width: calc(100% + (var(--offset) * 2));
+    width: calc(100% + var(--offset) + var(--offset) + var(--right-offset));
     margin-left: calc(var(--offset) * -1);
     margin-top: var(--margin-y);
     margin-bottom: var(--margin-y);
