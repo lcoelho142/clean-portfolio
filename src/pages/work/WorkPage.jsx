@@ -23,7 +23,7 @@ export default function WorkPage() {
                 <div className="card-container">
                     <WorkProj></WorkProj>
                     <div className="top-scroll">
-                        <HLine />
+                        <HLine offset="var(--base-padding)" rightOffset="var(--base-padding)" />
                         <button
                             onClick={scrollToTop}
                             className="btn-scroll secondary-font"

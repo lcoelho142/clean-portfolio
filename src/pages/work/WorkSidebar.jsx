@@ -1,15 +1,10 @@
-import './WorkSidebar.css';
+import ContentsSidebar from '../../components/common/ContentsSidebar.jsx';
 
 export default function WorkSidebar() {
-
     return (
-        <div className="work-sidebar-content">
-            <div className="sidebar-text">
-                <h1 className="secondary-font">CONTENTS</h1>
-                <a>1. Proj.</a>
-                <a>2. Proj.</a>
-                <a>3. Proj.</a>
-            </div>
-        </div>
+        <ContentsSidebar
+            className="work-sidebar-content"
+            items={["1. Proj.", "2. Proj.", "3. Proj."]}
+        />
     );
 }

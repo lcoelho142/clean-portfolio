@@ -84,11 +84,6 @@
     font-weight: 700;
 }
 
-a {
-    text-decoration: none;
-    color: var(--text-main);
-}
-
 .nav-icon {
     color: var(--accent);
 }
@@ -101,10 +96,6 @@ a {
 .nav-icon:active {
     color: var(--accent);
     transition: var(--color-fade);
-}
-
-p {
-    text-align: center;
 }
 
 .back-button-container {
