@@ -9,7 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import {faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
-import '../../pages/home/HomeSidebar.css';
 import Frog from '../../assets/frog.svg';
 
 export default function NavBar() {

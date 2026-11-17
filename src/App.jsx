@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { use, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css'
 import { ThemeProvider } from './ThemeContext.jsx'
+import { projects } from './pages/work/projects.js'
 
 // Import page components from Pages Folder
 import HomePage from './pages/home/HomePage.jsx'
@@ -12,19 +14,28 @@ import SocialSpark from './pages/work/social-spark/SocialSpark.jsx'
 import WeatherApi from './pages/work/weather-api/WeatherApi.jsx'
 import Portfolio from './pages/work/portfolio/Portfolio.jsx'
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 
 export default function App() {
   return (
       <ThemeProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
-            // Default HomePage
             <Route path="/" element={<HomePage />} />
             <Route path="/work" element={<WorkPage />} />
 
-            <Route path="/work/social-spark" element={<SocialSpark />} />
-            <Route path="/work/weather-api" element={<WeatherApi />} />
-            <Route path="/work/portfolio" element={<Portfolio />} />
+            <Route path={projects.socialSpark.path} element={<SocialSpark />} />
+            <Route path={projects.weatherApi.path} element={<WeatherApi />} />
+            <Route path={projects.portfolio.path} element={<Portfolio />} />
 
             <Route path="/play" element={<PlayPage />} />
             <Route path="/about" element={<AboutPage />} />

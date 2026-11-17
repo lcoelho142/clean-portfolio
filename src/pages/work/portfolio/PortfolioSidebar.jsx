@@ -1,14 +1,10 @@
-import './PortfolioSidebar.css';
+import ContentsSidebar from '../../../components/common/ContentsSidebar.jsx';
 
 export default function PortfolioSidebar() {
     return (
-        <div className="portfolio-sidebar-content">
-            <div className="sidebar-text">
-                <h1 className="secondary-font">CONTENTS</h1>
-                <a>Portfolio</a>
-                <a>Portfolio</a>
-                <a>Portfolio</a>
-            </div>
-        </div>
+        <ContentsSidebar
+            className="portfolio-sidebar-content"
+            items={["Portfolio", "Portfolio", "Portfolio"]}
+        />
     )
 }

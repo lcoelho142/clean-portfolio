@@ -1,18 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import useLiveWeather from '../../hooks/useLiveWeather.js';
 
 const LiveWeather = () => {
-    const [temp, setTemp] = useState("--");
-    const API_KEY = import.meta.env.VITE_WEATHER_KEY;
-
-    useEffect(() => {
-        console.log("My API Key is:", import.meta.env.VITE_WEATHER_KEY);
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=Wolcott,CT,US&units=imperial&appid=${API_KEY}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.main) setTemp(Math.round(data.main.temp));
-            })
-            .catch(() => setTemp("??"));
-    }, [API_KEY]);
+    const temp = useLiveWeather();
 
     return (
         <div className="status-content">

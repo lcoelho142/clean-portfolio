@@ -1,15 +1,10 @@
-import './SocialSparkSidebar.css';
+import ContentsSidebar from '../../../components/common/ContentsSidebar.jsx';
 
 export default function SocialSparkSidebar() {
-
     return (
-        <div className="socialspark-sidebar-content">
-            <div className="sidebar-text">
-                <h1 className="secondary-font">CONTENTS</h1>
-                <a>SocialSpark</a>
-                <a>SocialSpark</a>
-                <a>SocialSpark</a>
-            </div>
-        </div>
+        <ContentsSidebar
+            className="socialspark-sidebar-content"
+            items={["SocialSpark", "SocialSpark", "SocialSpark"]}
+        />
     );
 }

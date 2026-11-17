@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import './SideBar.css'
 
 export default function SideBar({ children }) {

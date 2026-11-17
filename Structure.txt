@@ -1,0 +1,97 @@
+WELCOME TO THE WEBSITE'S FILE MAP
+=================================
+
+Think of this project like a little house:
+- The pages are the rooms people visit.
+- The components are the reusable furniture and decorations in those rooms.
+- The CSS files decide how the rooms and furniture look.
+- The assets are the pictures, icons, and other artwork.
+
+IF YOU WANT TO...
+-----------------
+
+Change words or content on a page:
+Open that page's .jsx file in src/pages/.
+
+Change the home page:
+src/pages/home/HomePage.jsx
+
+Change the About page:
+src/pages/about/AboutPage.jsx
+
+Change the Play page:
+src/pages/play/PlayPage.jsx
+
+Change the list of work projects, their titles, dates, pictures, or links:
+src/pages/work/projects.js
+This is the shared project list used by the Work page and the project routes.
+
+Change one project's detail page:
+Look inside src/pages/work/ and open that project's folder:
+- social-spark/SocialSpark.jsx
+- weather-api/WeatherApi.jsx
+- portfolio/Portfolio.jsx
+
+Change a page's look:
+Edit the CSS file with the matching page name beside it. For example:
+src/pages/home/HomePage.css changes the home page's styles.
+
+Change the top or side navigation:
+src/components/layout/NavBar.jsx and NavBar.css
+src/components/layout/SideBar.jsx and SideBar.css
+src/components/layout/Layout.jsx and Layout.css
+
+Change a reusable little piece of the website:
+Look in src/components/common/ or src/components/home/.
+For example, FlowerToggle.jsx and FlowerToggle.css control the flower theme button.
+
+Change the project page "CONTENTS" sidebar:
+src/components/common/ContentsSidebar.jsx and ContentsSidebar.css
+The page-specific files decide which words appear in that shared sidebar.
+
+Change the light/dark theme:
+src/ThemeContext.jsx controls the theme provider.
+src/useTheme.js lets components read the theme.
+src/theme-context.js is the shared connection between them.
+src/index.css contains the theme colors.
+
+Change the live weather display or its request:
+src/components/home/LiveWeather.jsx controls how the temperature is shown.
+src/hooks/useLiveWeather.js gets the temperature.
+The weather service key belongs in a local .env file as VITE_WEATHER_KEY.
+Do not put secret keys in website source files.
+
+Change a picture or icon:
+Imported pictures and SVG icons are in src/assets/.
+Project thumbnails are in public/.
+Social Spark's extra case-study picture is in
+src/pages/work/social-spark/assets/.
+When changing a picture, also check the file path used by the page or project list.
+
+Change the website's overall styles:
+src/index.css contains styles and colors that can affect many pages.
+Be careful: changing a global style can change the whole site.
+
+WHAT THE MAIN FILES DO
+----------------------
+
+src/main.jsx starts the React website and loads the main styles and fonts.
+src/App.jsx connects the website's page addresses to their page files.
+index.html is the starting HTML page the browser opens.
+package.json lists the tools and commands used by this project.
+vite.config.js configures Vite, the tool that runs and builds the website.
+README.md has setup and development notes.
+
+QUICK COMMANDS
+--------------
+
+npm run dev    starts the website on your computer
+npm run lint   checks the code for common mistakes
+npm run build  prepares the website to be published
+
+TIP
+---
+
+If you are unsure where to start, find the page or feature you want to change
+in this guide, then edit its named file. Make one small change at a time and
+check the page in your browser.

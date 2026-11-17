@@ -37,7 +37,7 @@ html, body {
     margin-top: 25px;
 }
 
-.card-container::before {
+/* .card-container::before {
     content: "";
     position: absolute;
     z-index: 1;
@@ -45,7 +45,7 @@ html, body {
     width: 1px;
     height: 75%;
     top: 15%;
-}
+} */
 
 .top-scroll {
     width: 100%;
