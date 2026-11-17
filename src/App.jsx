@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { use, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css'
 import { ThemeProvider } from './ThemeContext.jsx'
 import { projects } from './pages/work/projects.js'
@@ -13,11 +14,21 @@ import SocialSpark from './pages/work/social-spark/SocialSpark.jsx'
 import WeatherApi from './pages/work/weather-api/WeatherApi.jsx'
 import Portfolio from './pages/work/portfolio/Portfolio.jsx'
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 
 export default function App() {
   return (
       <ThemeProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/work" element={<WorkPage />} />
