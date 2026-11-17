@@ -41,7 +41,7 @@ export default function SocialSpark() {
                     <img src={projects.socialSpark.imagePath} alt="Social Spark project preview" />
                     <a className="site-btn secondary-font font-semibold" href="https://test-website-azure-three.vercel.app/" target="_blank">Visit Live Site</a>
                 </section>
-                <section className="context-section">
+                <section id="context"className="context-section">
                     <div className="context-text">
                         <h1 className="secondary-font accent-color text-2xl font-semibold" >
                             Context
@@ -73,7 +73,7 @@ export default function SocialSpark() {
                         </div>
                     ))}
                 </section>
-                <section className="discovery-section">
+                <section id="discovery"className="discovery-section">
                     <figure>
                         <img src={DiscoveryImg1} />
                         <figcaption className="context-caption text-xs">
@@ -96,7 +96,7 @@ export default function SocialSpark() {
                         </figcaption>
                     </figure>
                 </section>
-                <section className="mood-board-section">
+                <section id="mood-board" className="mood-board-section">
                     <div className="mood-board-text">
                         <h1 className="secondary-font accent-color text-2xl font-semibold" >
                             Mood Board
@@ -109,7 +109,7 @@ export default function SocialSpark() {
                         </figcaption>
                     </figure>
                 </section>
-                <section className="iteration-section">
+                <section id="iteration" className="iteration-section">
                     <figure>
                         <img src={IterationImg} />
                         <figcaption className="context-caption text-xs">
@@ -138,7 +138,7 @@ export default function SocialSpark() {
                         </figcaption>
                     </figure>
                 </section>
-                <section className="delivery-section">
+                <section id="delivery" className="delivery-section">
                     <div className="delivery-text">
                         <h1 className="secondary-font accent-color text-2xl font-semibold" >
                             Delivery
@@ -158,7 +158,7 @@ export default function SocialSpark() {
                         </figcaption>
                     </figure>
                 </section>
-                <section className="reflection-section">
+                <section id="reflection" className="reflection-section">
                     <figure>
                         <img src={ReflectionImg1} />
                         <figcaption className="context-caption text-xs">

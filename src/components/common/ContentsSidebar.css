@@ -1,6 +1,34 @@
+html {
+    scroll-behavior: smooth;
+}
+
+/* offset so headings don't hide under a fixed header, if you have one */
+section[id] {
+    scroll-margin-top: 5rem;
+}
+
 .sidebar-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.sidebar-link {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.5rem 0;
+    transition: transform 0.2s ease, font-weight 0.2s ease;
+    transform-origin: center;
+}
+
+.sidebar-link:hover,
+.sidebar-link:focus-visible {
+    transform: scale(1.2);
+    font-weight: 700;
+}
+
+.sidebar-link.active {
+    font-weight: 700;
 }

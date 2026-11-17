@@ -23,6 +23,12 @@
     display: none;
 }
 
+.sidebar-divider {
+    width: 100%;
+    border-top: var(--border-thin);
+    margin: 10px 0;
+}
+
 .navbar-container {
     background-color: var(--bg-color);
     width: 125px;
