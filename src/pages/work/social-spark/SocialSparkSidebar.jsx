@@ -12,7 +12,7 @@ const sections = [
 export default function SocialSparkSidebar() {
     return (
         <ContentsSidebar
-            className="socialspark-sidebar-content"
+            className="socialspark-sidebar-content secondary-font"
             items={sections}
         />
     );

@@ -58,6 +58,7 @@
 .next-project-title {
     font-size: 1.5rem;
     margin: 1rem 0 0;
+    text-align: end;
 }
 
 .next-project-roles {
@@ -65,6 +66,7 @@
     letter-spacing: 0.05em;
     text-transform: uppercase; /* "Front-end Development" shows as caps like your mockup */
     margin: 0;
+    text-align: end;
 }
 
 @media (max-width: 700px) {

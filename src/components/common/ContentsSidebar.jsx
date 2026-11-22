@@ -29,7 +29,7 @@ export default function ContentsSidebar({ className, items }) {
         <div className={className}>
             <div className="sidebar-text">
                 <h1 className="secondary-font accent-color">PAGE QUICK NAV</h1>
-                <HLine className="sidebar-divider" offset="0px" rightOffset="49px" marginY="20px" />
+                <HLine className="sidebar-divider" offset="0px" rightOffset="30px" marginY="20px" />
                 {items.map(({ label, id }) => (
                     <a 
                         key={id} 

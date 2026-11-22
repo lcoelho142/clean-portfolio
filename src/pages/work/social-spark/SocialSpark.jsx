@@ -34,7 +34,7 @@ export default function SocialSpark() {
     ];
 
     return (
-        <Layout sidebarContent={<SocialSparkSidebar />}>
+        <Layout sidebarContent={<SocialSparkSidebar />} mainRef={mainRef}>
             <div className="main-font project-content">
                 <h1 className="project-title secondary-font font-extrabold text-3xl">Social Spark: Website Design</h1>
                 <section className="hero-section">
